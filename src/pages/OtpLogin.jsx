@@ -14,21 +14,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PageTitle from "@/components/PageTitle";
-import { Link } from "react-router-dom";
-const ForgotPassowrd = () => {
+const OtpLogin = () => {
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <PageTitle title={"Reset Password"} />
+      <PageTitle title={"Login via OTP"} />
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">Reset Password</CardTitle>
+              <CardTitle className="text-2xl">OTP Verification</CardTitle>
               <CardDescription>
-                Enter the OPT below to reset account password
+                Enter the OPT which is sent to your registered mobile number.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -50,26 +48,10 @@ const ForgotPassowrd = () => {
                       </InputOTPGroup>
                     </InputOTP>
                   </div>
-                  <div className="grid gap-2">
-                    <div className="flex items-center">
-                      <Label htmlFor="password">Password</Label>
-                    </div>
-                    <Input id="password" type="password" required />
-                  </div>
-                  <div className="grid gap-2">
-                    <div className="flex items-center">
-                      <Label htmlFor="password">Confirm Password</Label>
-                    </div>
-                    <Input id="ConfirmPassword" type="password" required />
-                  </div>
+
                   <Button type="submit" className="w-full">
-                    Reset Password
+                    Login
                   </Button>
-                </div>
-                <div className="mt-4 text-center text-sm">
-                  <Link to="/login">
-                    <Button variant="link">Back to login</Button>
-                  </Link>
                 </div>
               </form>
             </CardContent>
@@ -80,4 +62,4 @@ const ForgotPassowrd = () => {
   );
 };
 
-export default ForgotPassowrd;
+export default OtpLogin;
