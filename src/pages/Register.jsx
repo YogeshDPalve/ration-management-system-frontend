@@ -10,9 +10,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import PageTitle from "@/components/PageTitle";
 const Register = () => {
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <PageTitle title={"Register"} />
       <div className="w-full max-w-xl">
         <div className="flex flex-col gap-6">
           <Card>
