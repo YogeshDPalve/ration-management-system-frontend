@@ -1,16 +1,19 @@
 import Navbar from "@/components/Navbar";
 import PageTitle from "@/components/PageTitle";
 import React from "react";
-
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import SideBar from "@/components/Sidebar";
 const Dashboard = () => {
   return (
     <>
       <PageTitle title={"Dashboard"} />
       <Navbar />
-      <div className="text-4xl font-bold flex items-center justify-center h-[100vh]">
-        Dashboard
-      </div>
-      ;
+      <SidebarProvider  >
+        <SideBar  />
+        <main>
+          <SidebarTrigger  />
+        </main>
+      </SidebarProvider>
     </>
   );
 };
