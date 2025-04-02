@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ForgotPassowrd from "./ForgotPassowrd";
 
 const Login = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-3xl">
@@ -32,12 +34,14 @@ const Login = () => {
                   <div className="grid gap-2">
                     <div className="flex items-center">
                       <Label htmlFor="password">Password</Label>
-                      <a
-                        href="#"
+
+                      <Button
+                        onClick={() => navigate("/reset-password")}
+                        variant="link"
                         className="ml-auto text-sm underline-offset-2 hover:underline"
                       >
                         Forgot your password?
-                      </a>
+                      </Button>
                     </div>
                     <Input id="password" type="password" required />
                   </div>
@@ -101,7 +105,7 @@ const Login = () => {
                 <img
                   src="https://img.freepik.com/free-photo/sacks-healthy-legumes-grains_53876-65444.jpg?t=st=1743504466~exp=1743508066~hmac=a23feeb34d1660578d24b963e9babb600dc7cbb9f6333f596c287d1e66316633&w=1380"
                   alt="Image"
-                  className="absolute inset-0 h-full w-full object-cover rounded-sm dark:brightness-[0.2] dark:grayscale"
+                  className="absolute inset-0 h-full w-full object-cover rounded-sm dark:brightness-[0.5] "
                 />
               </div>
             </CardContent>
