@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import ForgotPassowrd from "./pages/ForgotPassowrd";
 import OtpLogin from "./pages/OtpLogin";
 import Dashboard from "./pages/Dashboard";
+import SendOtp from "./pages/SendOtp";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login/otp-verification" element={<OtpLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset-password" element={<ForgotPassowrd />} />
+          <Route path="/send-otp" element={<SendOtp />} />
         </Routes>
       </BrowserRouter>
     </>

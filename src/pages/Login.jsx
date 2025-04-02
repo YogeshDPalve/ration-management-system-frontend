@@ -37,7 +37,7 @@ const Login = () => {
                       <Label htmlFor="password">Password</Label>
 
                       <Button
-                        onClick={() => navigate("/reset-password")}
+                        onClick={() => navigate("/send-otp")}
                         variant="link"
                         className="ml-auto text-sm underline-offset-2 hover:underline"
                       >
