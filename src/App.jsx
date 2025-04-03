@@ -6,7 +6,7 @@ import ForgotPassowrd from "./pages/ForgotPassowrd";
 import OtpLogin from "./pages/OtpLogin";
 import Dashboard from "./pages/Dashboard";
 import SendOtp from "./pages/SendOtp";
-
+import "./index.css";
 function App() {
   return (
     <>
