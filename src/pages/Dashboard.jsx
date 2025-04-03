@@ -1,4 +1,3 @@
- 
 import PageTitle from "@/components/PageTitle";
 import React from "react";
 
@@ -8,7 +7,10 @@ const Dashboard = () => {
     <>
       <PageTitle title={"Dashboard"} />
 
+      <div>
       <Sidebar />
+        <h1>Dashboard</h1>
+      </div>
     </>
   );
 };

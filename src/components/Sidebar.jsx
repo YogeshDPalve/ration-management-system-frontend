@@ -64,19 +64,19 @@ const Sidebar = () => {
       </div>
 
       <div className="mt-3 space-y-1 font-semibold">
-        <div className="flex items-center gap-3 rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
+        <div className="flex items-center font-normal gap-3 rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
           <PanelsTopLeft size={17} />
           <a href="#">Dashboard</a>
         </div>
-        <div className="flex items-center gap-3 rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
+        <div className="flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
           <MessageSquareMore size={17} />
           <a href="#">Notifications</a>
         </div>
-        <div className="flex items-center gap-3 rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
+        <div className="flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
           <CalendarClockIcon size={17} />
           <a href="#">History</a>
         </div>
-        <div className="flex items-center gap-3 rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
+        <div className="flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8">
           <CircleAlert size={17} />
           <a href="#">Complaint</a>
         </div>
