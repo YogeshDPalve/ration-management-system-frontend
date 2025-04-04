@@ -48,7 +48,7 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/login",
+        path: "/",
         element: <Login />,
       },
       {
@@ -78,7 +78,7 @@ const appRouter = createBrowserRouter([
       {
         path: "/complaint",
         element: <Complaint />,
-      },  
+      },
 
       //       //* Admin Routes strar from here
 

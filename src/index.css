@@ -8,9 +8,11 @@
   --font-inter: "Inter", sans-serif;
   --font-nunito: "Nunito", sans-serif;
 }
-
+.active {
+  color: #6abaff;
+  background: #0d2847;
+}
 :root {
- 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

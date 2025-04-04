@@ -7,6 +7,7 @@ const MainLayout = () => {
 
   // List of paths where Sidebar should NOT be shown
   const hideSidebarPaths = [
+    "/",
     "/login",
     "/register",
     "/send-otp",

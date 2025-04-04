@@ -3,7 +3,6 @@ import { Separator } from "./ui/separator";
 import {
   Bell,
   CalendarClockIcon,
-  ChevronDown,
   CircleAlert,
   EllipsisVertical,
   MessageSquareMore,
@@ -27,6 +26,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { NavLink } from "react-router-dom";
+import "../index.css";
 const Sidebar = () => {
   return (
     <div className=" border-r-1 bg-[#111113] h-[100vh] sticky p-2  w-50 text-primary  ">
@@ -64,22 +65,46 @@ const Sidebar = () => {
       </div>
 
       <div className="mt-3 space-y-1 font-semibold">
-        <div className="flex items-center font-normal gap-3 rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8 cursor-pointer">
+        <NavLink
+          to="/dashboard"
+          className={`${({ isActive }) =>
+            isActive
+              ? "active"
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+        >
           <PanelsTopLeft size={17} />
-          <a href="/dashboard">Dashboard</a>
-        </div>
-        <div className="flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8 cursor-pointer">
+          Dashboard
+        </NavLink>
+        <NavLink
+          to="/notifications"
+          className={`${({ isActive }) =>
+            isActive
+              ? "active"
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+        >
           <MessageSquareMore size={17} />
-          <a href="/notifications">Notifications</a>
-        </div>
-        <div className="flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8 cursor-pointer">
+          Notifications
+        </NavLink>
+        <NavLink
+          to="/history"
+          className={`${({ isActive }) =>
+            isActive
+              ? "active"
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+        >
           <CalendarClockIcon size={17} />
-          <a href="/history">History</a>
-        </div>
-        <div className="flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-blue-300 hover:bg-[#0D2847] h-8 cursor-pointer">
+          History
+        </NavLink>
+        <NavLink
+          to="/complaint"
+          className={`${({ isActive }) =>
+            isActive
+              ? "active"
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+        >
           <CircleAlert size={17} />
-          <a href="/complaint">Complaint</a>
-        </div>
+          Complaint
+        </NavLink>
       </div>
 
       <div className="absolute bottom-0 left-0 w-full ">
