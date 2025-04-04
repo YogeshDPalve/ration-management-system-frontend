@@ -1,5 +1,11 @@
 import "./App.css";
-import { BrowserRouter, createBrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassowrd from "./pages/ForgotPassowrd";
@@ -7,22 +13,26 @@ import OtpLogin from "./pages/OtpLogin";
 import Dashboard from "./pages/Dashboard";
 import SendOtp from "./pages/SendOtp";
 import "./index.css";
-function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/login/otp-verification" element={<OtpLogin />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/reset-password" element={<ForgotPassowrd />} />
-          <Route path="/send-otp" element={<SendOtp />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  );
-}
+import MainLayout from "./layout/MainLayout";
+import Notifications from "./pages/Notifications";
+import History from "./pages/History";
+import Complaint from "./pages/Complaint";
+// function App() {
+//   return (
+//     <>
+//       <BrowserRouter>
+//         <Routes>
+//           <Route path="/" element={<MainLayout />} />
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/login/otp-verification" element={<OtpLogin />} />
+//           <Route path="/register" element={<Register />} />
+//           <Route path="/reset-password" element={<ForgotPassowrd />} />
+//           <Route path="/send-otp" element={<SendOtp />} />
+//         </Routes>
+//       </BrowserRouter>
+//     </>
+//   );
+// }
 
 const appRouter = createBrowserRouter([
   {
@@ -30,101 +40,82 @@ const appRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "/",
+        path: "/dashboard",
         element: (
           <>
-            <HeroSection />
-            <Courses />
+            <Dashboard />
           </>
         ),
       },
       {
-        path: "login",
-        element: (
-          <AuthenticatedUser>
-            <Login />
-          </AuthenticatedUser>
-        ),
+        path: "/login",
+        element: <Login />,
       },
       {
-        path: "my-learning",
-        element: (
-          <ProtectedRoutes>
-            <MyLearning />
-          </ProtectedRoutes>
-        ),
+        path: "/login/otp-verification",
+        element: <OtpLogin />,
       },
       {
-        path: "profile",
-        element: (
-          <ProtectedRoutes>
-            <Profile />
-          </ProtectedRoutes>
-        ),
+        path: "/register",
+        element: <Register />,
       },
       {
-        path: "course/search",
-        element: (
-          <ProtectedRoutes>
-            <SearchPage />
-          </ProtectedRoutes>
-        ),
+        path: "/reset-password",
+        element: <ForgotPassowrd />,
       },
       {
-        path: "course-detail/:courseId",
-        element: (
-          <ProtectedRoutes>
-            <CourseDetail />
-          </ProtectedRoutes>
-        ),
+        path: "/send-otp",
+        element: <SendOtp />,
       },
       {
-        path: "course-progress/:courseId",
-        element: (
-          <ProtectedRoutes>
-            <PurchasedCourseProtectedRoutes>
-              <CourseProgress />
-            </PurchasedCourseProtectedRoutes>
-          </ProtectedRoutes>
-        ),
+        path: "/notifications",
+        element: <Notifications />,
       },
+      {
+        path: "/history",
+        element: <History />,
+      },
+      {
+        path: "/complaint",
+        element: <Complaint />,
+      },  
 
-      //* Admin Routes strar from here
+      //       //* Admin Routes strar from here
 
-      {
-        path: "admin",
-        element: (
-          <AdminRoute>
-            <Sidebar />
-          </AdminRoute>
-        ),
-        children: [
-          {
-            path: "dashboard",
-            element: <Dashboard />,
-          },
-          {
-            path: "course",
-            element: <CourseTable />,
-          },
-          {
-            path: "course/create",
-            element: <AddCourse />,
-          },
-          {
-            path: "course/:courseId",
-            element: <EditCourse />,
-          },
-          {
-            path: "course/:courseId/lecture",
-            element: <CreateLecture />,
-          },
-          {
-            path: "course/:courseId/lecture/:lectureId",
-            element: <EditLecture />,
-          },
-        ],
-      },
+      // {
+      //   path: "admin",
+      //   element: (
+      //     <AdminRoute>
+      //       <Sidebar />
+      //     </AdminRoute>
+      //   ),
+      //   children: [
+      //     {
+      //       path: "dashboard",
+      //       element: <Dashboard />,
+      //     },
+      //     {
+      //       path: "course",
+      //       element: <CourseTable />,
+      //     },
+      //     {
+      //       path: "course/create",
+      //       element: <AddCourse />,
+      //     },
+      //     {
+      //       path: "course/:courseId",
+      //       element: <EditCourse />,
+      //     },
+      //     {
+      //       path: "course/:courseId/lecture",
+      //       element: <CreateLecture />,
+      //     },
+      //     {
+      //       path: "course/:courseId/lecture/:lectureId",
+      //       element: <EditLecture />,
+      //     },
+      //   ],
+      // },
     ],
   },
 ]);
@@ -132,10 +123,10 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
     <main>
-      <ThemeProvider>
-        <RouterProvider router={appRouter} />
-      </ThemeProvider>
+      {/* <ThemeProvider> */}
+      <RouterProvider router={appRouter} />
+      {/* </ThemeProvider> */}
     </main>
   );
-} 
+}
 export default App;

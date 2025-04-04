@@ -26,7 +26,7 @@ const Register = () => {
             </CardHeader>
             <CardContent>
               <form className="">
-                <div className=" grid grid-cols-2 gap-6">
+                <div className=" grid md:grid-cols-2 grid-cols-1 gap-6">
                   <div className="grid gap-2">
                     <Label>Ration Id</Label>
                     <Input
@@ -120,7 +120,7 @@ const Register = () => {
                       placeholder="****"
                     />
                   </div>
-                  <Button type="submit" className="w-full col-span-2">
+                  <Button type="submit" className="w-full md:col-span-2">
                     Login
                   </Button>
                 </div>
