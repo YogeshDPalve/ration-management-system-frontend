@@ -17,6 +17,8 @@ import MainLayout from "./layout/MainLayout";
 import Notifications from "./pages/Notifications";
 import History from "./pages/History";
 import Complaint from "./pages/Complaint";
+import Profile from "./pages/Profile";
+import { ThemeProvider } from "./components/theme-provider";
 // function App() {
 //   return (
 //     <>
@@ -79,6 +81,10 @@ const appRouter = createBrowserRouter([
         path: "/complaint",
         element: <Complaint />,
       },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
 
       //       //* Admin Routes strar from here
 
@@ -123,9 +129,9 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
     <main>
-      {/* <ThemeProvider> */}
-      <RouterProvider router={appRouter} />
-      {/* </ThemeProvider> */}
+      <ThemeProvider>
+        <RouterProvider router={appRouter} />
+      </ThemeProvider>
     </main>
   );
 }

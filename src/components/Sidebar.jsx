@@ -26,14 +26,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../index.css";
 const Sidebar = () => {
   return (
-    <div className=" border-r-1 bg-[#111113] h-[100vh] sticky p-2  w-50 text-primary  ">
+    <div className=" border-r-1 bg-[#111113] p-2  w-60 text-primary fixed top-0 left-0 h-screen z-50 ">
       <div className="flex items-center justify-between h-10 p-2">
         <div>
-          <div className="font-winky text-lg  ">RMS</div>
+          <div className="font-winky text-xl font-semibold tracking-wider  ">
+            RMS
+          </div>
         </div>
         <div className="flex w-13 text-muted-foreground justify-between">
           <Wheat size={17} />
@@ -43,7 +45,7 @@ const Sidebar = () => {
       <div>
         <Button
           variant="outline"
-          className="w-full h-7 text-xs text-primary cursor-pointer font-nunito font-light flex items-center justify-start mb-3"
+          className="w-full h-9 text-sm text-gray-400 cursor-pointer font-nunito  flex items-center justify-start mb-3"
         >
           <Search /> Search
         </Button>
@@ -52,25 +54,25 @@ const Sidebar = () => {
         <h2 className="text-xs font-inter text-gray-300 mb-1">Account</h2>{" "}
         <Button
           variant="outline"
-          className="h-10 p-2 w-full cursor-pointer flex justify-start items-center"
+          className="h-12 p-2 w-full cursor-pointer flex justify-start items-center"
         >
-          <div className="flex items-center justify-start gap-2">
-            <Avatar className="size-6">
+          <div className="flex items-center justify-start p-2 gap-2">
+            <Avatar className="size-7">
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <h4 className="text-xs">John Doe</h4>
+            <h4 className="text-sm">John Doe</h4>
           </div>
         </Button>
       </div>
-
+      <Separator />
       <div className="mt-3 space-y-1 font-semibold">
         <NavLink
           to="/dashboard"
           className={`${({ isActive }) =>
             isActive
               ? "active"
-              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-sm hover:text-white hover:bg-[#18191B] h-9 cursor-pointer pl-3`}
         >
           <PanelsTopLeft size={17} />
           Dashboard
@@ -80,7 +82,7 @@ const Sidebar = () => {
           className={`${({ isActive }) =>
             isActive
               ? "active"
-              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-sm hover:text-white hover:bg-[#18191B] h-9 cursor-pointer pl-3`}
         >
           <MessageSquareMore size={17} />
           Notifications
@@ -90,7 +92,7 @@ const Sidebar = () => {
           className={`${({ isActive }) =>
             isActive
               ? "active"
-              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-sm hover:text-white hover:bg-[#18191B] h-9 cursor-pointer pl-3`}
         >
           <CalendarClockIcon size={17} />
           History
@@ -100,7 +102,7 @@ const Sidebar = () => {
           className={`${({ isActive }) =>
             isActive
               ? "active"
-              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-xs hover:text-white hover:bg-[#18191B] h-8 cursor-pointer pl-3`}
+              : ""} flex items-center gap-3 font-normal rounded-sm p-1 text-sm hover:text-white hover:bg-[#18191B] h-9 cursor-pointer pl-3`}
         >
           <CircleAlert size={17} />
           Complaint
@@ -114,20 +116,20 @@ const Sidebar = () => {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="h-15 p-3 w-full cursor-pointer flex justify-start items-center rounded-none border-none"
+                className="h-17 p-3 w-full cursor-pointer flex justify-start items-center rounded-none border-none"
               >
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center justify-start gap-3">
-                    <Avatar className="size-6">
+                    <Avatar className="size-8">
                       <AvatarImage
                         src="https://github.com/shadcn.png"
                         alt="@shadcn"
                       />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                    <div className="text-start">
-                      <h4 className="text-xs">John Doe</h4>
-                      <p className="text-xs font-normal text-wrap text-gray-400">
+                    <div className="text-start font-nunito">
+                      <h4 className="text-sm">John Doe</h4>
+                      <p className="text-sm font-normal break-words text-gray-400">
                         johndoe@gmail
                       </p>
                     </div>
@@ -138,14 +140,16 @@ const Sidebar = () => {
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-50">
+            <DropdownMenuContent className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  Profile
-                  <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                </DropdownMenuItem>
+                <Link to="/profile">
+                  <DropdownMenuItem>
+                    Profile
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem>
                   Billing
                   <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
@@ -182,12 +186,14 @@ const Sidebar = () => {
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuItem disabled>API</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-300 ">
-                Log out
-                <DropdownMenuShortcut className="text-red-300 ">
-                  ⇧⌘Q
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
+              <Link to="/">
+                <DropdownMenuItem className="text-red-300 ">
+                  Log out
+                  <DropdownMenuShortcut className="text-red-300 ">
+                    ⇧⌘Q
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
