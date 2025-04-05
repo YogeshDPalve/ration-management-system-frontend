@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import React from "react";
+import React, { useMemo } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 const MainLayout = () => {
@@ -7,6 +7,7 @@ const MainLayout = () => {
 
   // List of paths where Sidebar should NOT be shown
   const hideSidebarPaths = [
+    "/",
     "/login",
     "/register",
     "/send-otp",
@@ -14,11 +15,16 @@ const MainLayout = () => {
     "/login/otp-verification",
   ];
 
+  const shouldHideSidebar = useMemo(
+    () => hideSidebarPaths.includes(location.pathname),
+    [location.pathname]
+  );
   return (
     <div className="flex min-h-screen">
-      {/* Show Sidebar only if the current path is NOT in the hideSidebarPaths list */}
-      {!hideSidebarPaths.includes(location.pathname) && <Sidebar />}
-      <div className="flex-1">
+      {!shouldHideSidebar && <Sidebar />}
+      <div
+        className={`flex-1 ${!shouldHideSidebar ? "pl-60" : ""}`} // match sidebar width
+      >
         <Outlet />
       </div>
     </div>
