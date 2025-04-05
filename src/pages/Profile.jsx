@@ -152,49 +152,51 @@ const Profile = () => {
               Basic information about your account
             </p>
             <Separator className="mt-5 mb-2 " />
-            <div className="p-2">
-              <div className=" flex items-center justify-between">
-                <h4 className="text-md font-semibold">Name</h4>
-                <p className="text-sm">
-                  {user.firstName} {user.lastName}
-                </p>
+            <div className="font-inter">
+              <div className="p-2">
+                <div className=" flex items-center justify-between">
+                  <h4 className="text-md font-semibold">Name</h4>
+                  <p className="text-sm">
+                    {user.firstName} {user.lastName}
+                  </p>
+                </div>
               </div>
-            </div>
-            <Separator className="my-2 " />
-            <div className="p-2">
-              <div className=" flex items-center justify-between">
-                <h4 className="text-md font-semibold">Adhar Card Number</h4>
-                <p className="text-sm">{user.adharcardNumber} </p>
+              <Separator className="my-2 " />
+              <div className="p-2">
+                <div className=" flex items-center justify-between">
+                  <h4 className="text-md font-semibold">Adhar Card Number</h4>
+                  <p className="text-sm">{user.adharcardNumber} </p>
+                </div>
               </div>
-            </div>
-            <Separator className="my-2 " />
-            <div className="p-2">
-              <div className=" flex items-center justify-between">
-                <h4 className="text-md font-semibold">Ration Id</h4>
-                <p className="text-sm">{user.rationId} </p>
+              <Separator className="my-2 " />
+              <div className="p-2">
+                <div className=" flex items-center justify-between">
+                  <h4 className="text-md font-semibold">Ration Id</h4>
+                  <p className="text-sm">{user.rationId} </p>
+                </div>
               </div>
-            </div>
-            <Separator className="my-2 " />
-            <div className="p-2">
-              <div className=" flex items-center justify-between">
-                <h4 className="text-md font-semibold">Mobile Number</h4>
-                <p className="text-sm">{user.mobileNo} </p>
+              <Separator className="my-2 " />
+              <div className="p-2">
+                <div className=" flex items-center justify-between">
+                  <h4 className="text-md font-semibold">Mobile Number</h4>
+                  <p className="text-sm">{user.mobileNo} </p>
+                </div>
               </div>
-            </div>
-            <Separator className="my-2 " />
-            <div className="p-2">
-              <div className=" flex items-center justify-between">
-                <h4 className="text-md font-semibold">Email</h4>
-                <p className="text-sm">{user.email} </p>
+              <Separator className="my-2 " />
+              <div className="p-2">
+                <div className=" flex items-center justify-between">
+                  <h4 className="text-md font-semibold">Email</h4>
+                  <p className="text-sm">{user.email} </p>
+                </div>
               </div>
-            </div>
-            <Separator className="my-2 " />
-            <div className="p-2">
-              <div className=" flex items-center justify-between">
-                <h4 className="text-md font-semibold">
-                  Fair Price Shop Nubmer
-                </h4>
-                <p className="text-sm">{user.fairPriceShopNumber} </p>
+              <Separator className="my-2 " />
+              <div className="p-2">
+                <div className=" flex items-center justify-between">
+                  <h4 className="text-md font-semibold">
+                    Fair Price Shop Nubmer
+                  </h4>
+                  <p className="text-sm">{user.fairPriceShopNumber} </p>
+                </div>
               </div>
             </div>
           </div>
@@ -229,7 +231,7 @@ const Profile = () => {
           <div className="max-w-4xl">
             <Table>
               <TableHeader>
-                <TableRow className="font-winky text-white font-bold tracking-wide ">
+                <TableRow className="font-winky text-white text-base font-bold tracking-wide ">
                   <TableHead>Name</TableHead>
                   <TableHead>Age</TableHead>
                   <TableHead className="text-center">Gender</TableHead>
