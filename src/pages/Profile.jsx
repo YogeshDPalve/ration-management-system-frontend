@@ -145,10 +145,10 @@ const Profile = () => {
         <div className="grid lg:grid-cols-2 gap-5 grid-cols-1">
           <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
             <div className="flex items-center gap-5 ">
-              <LibraryBig className="text-[#9ea1a3]" size={20} />
+              <LibraryBig className="text-muted-foreground" size={20} />
               <h2 className="font-bold text-2xl">Account Information</h2>
             </div>
-            <p className="text-[#9ea1a3] text-md">
+            <p className="text-muted-foreground text-md">
               Basic information about your account
             </p>
             <Separator className="mt-5 mb-2 " />
@@ -202,10 +202,10 @@ const Profile = () => {
           </div>
           <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
             <div className="flex items-center gap-5 ">
-              <ReceiptIndianRupee className="text-[#9ea1a3]" size={20} />
+              <ReceiptIndianRupee className="text-muted-foreground" size={20} />
               <h2 className="font-bold text-2xl">Billing</h2>
             </div>
-            <p className="text-[#9ea1a3] text-md">
+            <p className="text-muted-foreground  text-md">
               Billing history about your account
             </p>
             <Separator className="mt-5 mb-2 " />
@@ -221,10 +221,10 @@ const Profile = () => {
         {/* Family Members */}
         <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm  ">
           <div className="flex items-center gap-5 ">
-            <Users className="text-[#9ea1a3]" size={20} />
+            <Users className="text-muted-foreground " size={20} />
             <h2 className="font-bold text-2xl">Family Members</h2>
           </div>
-          <p className="text-[#9ea1a3] text-md">
+          <p className="text-muted-foreground text-md">
             List of all members in your family
           </p>
           <Separator className="mt-5 mb-2 " />
