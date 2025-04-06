@@ -45,13 +45,13 @@ const Sidebar = () => {
       <div>
         <Button
           variant="outline"
-          className="w-full h-9 text-sm text-gray-400 cursor-pointer font-nunito  flex items-center justify-start mb-3"
+          className="w-full h-9 text-sm text-muted-foreground cursor-pointer font-nunito  flex items-center justify-start mb-3"
         >
           <Search /> Search
         </Button>
       </div>
       <div className="mb-4">
-        <h2 className="text-xs font-inter text-gray-300 mb-1">Account</h2>{" "}
+        <h2 className="text-xs font-inter text-muted-foreground mb-1">Account</h2>{" "}
         <Button
           variant="outline"
           className="h-12 p-2 w-full cursor-pointer flex justify-start items-center"
@@ -129,13 +129,13 @@ const Sidebar = () => {
                     </Avatar>
                     <div className="text-start font-nunito">
                       <h4 className="text-sm">John Doe</h4>
-                      <p className="text-sm font-normal break-words text-gray-400">
+                      <p className="text-sm font-normal break-words text-muted-foreground">
                         johndoe@gmail
                       </p>
                     </div>
                   </div>
                   <div>
-                    <EllipsisVertical className="text-gray-400" />
+                    <EllipsisVertical className="text-muted-foreground" />
                   </div>
                 </div>
               </Button>
