@@ -219,6 +219,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          {/* Billing */}
           <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
             <div className="flex items-center gap-5 ">
               <ReceiptIndianRupee className="text-muted-foreground" size={20} />
@@ -228,7 +229,7 @@ const Profile = () => {
               Billing history about your account
             </p>
             <Separator className="mt-5 mb-2 " />
-            <CardContent>
+            <CardContent className='mt-10'>
               <ChartContainer config={chartConfig}>
                 <AreaChart
                   accessibilityLayer

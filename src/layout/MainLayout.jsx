@@ -23,7 +23,7 @@ const MainLayout = () => {
     <div className="flex min-h-screen">
       {!shouldHideSidebar && <Sidebar />}
       <div
-        className={`flex-1 ${!shouldHideSidebar ? "pl-60" : ""}`} // match sidebar width
+        className={`flex-1 ${!shouldHideSidebar ? "md:pl-60" : ""}`} // match sidebar width
       >
         <Outlet />
       </div>

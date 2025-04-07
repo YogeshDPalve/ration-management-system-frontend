@@ -30,7 +30,7 @@ import { Link, NavLink } from "react-router-dom";
 import "../index.css";
 const Sidebar = () => {
   return (
-    <div className=" border-r-1 bg-[#111113] p-2  w-60 text-primary fixed top-0 left-0 h-screen z-50 ">
+    <div className="hidden md:block border-r-1 bg-[#111113] p-2  w-60 text-primary fixed top-0 left-0 h-screen z-50 ">
       <div className="flex items-center justify-between h-10 p-2">
         <div>
           <div className="font-winky text-xl font-semibold tracking-wider  ">
