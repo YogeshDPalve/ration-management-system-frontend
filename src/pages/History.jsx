@@ -134,7 +134,7 @@ const History = () => {
         <CardContent>
           <Table>
             <TableHeader>
-              <TableRow className="font-winky text-white text-base font-bold tracking-wide ">
+              <TableRow className="font-winky text-white text-lg font-bold tracking-wide ">
                 <TableHead>Date</TableHead>
                 <TableHead>Item</TableHead>
                 <TableHead className="text-center">Quantity</TableHead>
@@ -152,7 +152,7 @@ const History = () => {
                 items.map((item, index) => (
                   <TableRow
                     key={item.id}
-                    className="text-sm font-winky font-light tracking-wide"
+                    className="text-base font-winky font-light tracking-wide"
                   >
                     {index === 0 && (
                       <TableCell
