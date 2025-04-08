@@ -1,11 +1,30 @@
 import PageTitle from "@/components/PageTitle";
 import { Separator } from "@/components/ui/separator";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { CardContent } from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+const chartData = [
+  { month: "January", Price: 186 },
+  { month: "February", Price: 305 },
+  { month: "March", Price: 237 },
+  { month: "April", Price: 173 },
+  { month: "May", Price: 209 },
+];
+
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "#c6d6f4",
+  },
+};
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -200,6 +219,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          {/* Billing */}
           <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
             <div className="flex items-center gap-5 ">
               <ReceiptIndianRupee className="text-muted-foreground" size={20} />
@@ -209,12 +229,40 @@ const Profile = () => {
               Billing history about your account
             </p>
             <Separator className="mt-5 mb-2 " />
-            <div className="p-2 font-inter">
-              <div className=" flex items-center justify-between">
-                <h4 className=" font-semibold">Arpil</h4>
-                <p className="text-xl font-bold">$456</p>
-              </div>
-            </div>
+            <CardContent className='mt-10 px-0'>
+              <ChartContainer config={chartConfig}>
+                <AreaChart
+                  accessibilityLayer
+                  data={chartData}
+                  margin={{
+                    left: 12,
+                    right: 12,
+                  }}
+                >
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                    tickFormatter={(value) => value.slice(0, 3)}
+                  />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent indicator="dot" />}
+                  />
+
+                  <Area
+                    dataKey="Price"
+                    type="natural"
+                    fill="var(--color-desktop)"
+                    fillOpacity={0.4}
+                    stroke="var(--color-desktop)"
+                    stackId="a"
+                  />
+                </AreaChart>
+              </ChartContainer>
+            </CardContent>
             <Separator className="my-2 " />
           </div>
         </div>
