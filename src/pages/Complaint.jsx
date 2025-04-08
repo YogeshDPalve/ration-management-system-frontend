@@ -114,7 +114,7 @@ const Complaint = () => {
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="feedback" className="lg:w-[60%] w-full mx-auto">
+          <TabsContent value="feedback" className="md:w-[70%] w-full mx-auto">
             <Card>
               <CardHeader>
                 <CardTitle className="text-2xl">Feedback</CardTitle>
@@ -128,9 +128,8 @@ const Complaint = () => {
                         <Tooltip>
                           <TooltipTrigger className="">
                             <Button
-                          
                               onClick={() => handleRatingClicked(emoji.id)}
-                              className={`md:text-4xl mx-1 text-5xl p-1 h-17 sm:h-14 bg-transparent hover:bg-amber-100 ${
+                              className={`md:text-4xl sm:mx-1 text-5xl  p-1 h-17 sm:h-14 bg-transparent hover:bg-amber-100 ${
                                 emojis === emoji.id ? "bg-amber-100" : ""
                               } `}
                             >
