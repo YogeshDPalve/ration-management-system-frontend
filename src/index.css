@@ -12,6 +12,9 @@
   color: #6abaff;
   background: #0d2847;
 }
+button{
+  cursor: pointer;
+}
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

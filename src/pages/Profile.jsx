@@ -229,7 +229,7 @@ const Profile = () => {
               Billing history about your account
             </p>
             <Separator className="mt-5 mb-2 " />
-            <CardContent className='mt-10'>
+            <CardContent className='mt-10 px-0'>
               <ChartContainer config={chartConfig}>
                 <AreaChart
                   accessibilityLayer
