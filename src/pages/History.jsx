@@ -115,13 +115,15 @@ const History = () => {
     <>
       <PageTitle title={"History"} />
 
-      <div className="m-10">
+      <div className="md:m-10 my-10 mx-2">
         <div className="flex gap-4 text-primary items-center">
           <CalendarClockIcon size={30} />
-          <h1 className=" text-3xl font-semibold font-winky ">History</h1>
+          <h1 className=" md:text-3xl text-2xl font-semibold font-winky ">
+            History
+          </h1>
         </div>
       </div>
-      <Card className="m-10">
+      <Card className="md:m-10 m-3 overflow-x-auto">
         <CardHeader>
           <CardTitle className="text-2xl font-nunito font-bold">
             Consumption History
@@ -138,7 +140,9 @@ const History = () => {
                 <TableHead>Date</TableHead>
                 <TableHead>Item</TableHead>
                 <TableHead className="text-center">Quantity</TableHead>
-                <TableHead className="text-center">Fair Price Shop</TableHead>
+                <TableHead className="text-center hidden  sm:block">
+                  Fair Price Shop
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -166,7 +170,7 @@ const History = () => {
                     <TableCell className="text-center">
                       {item.quantity} {item.unit}
                     </TableCell>
-                    <TableCell className="text-center">
+                    <TableCell className="text-center  hidden  sm:block">
                       {item.shopNumber}
                     </TableCell>
                   </TableRow>

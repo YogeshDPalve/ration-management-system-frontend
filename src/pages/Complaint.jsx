@@ -45,16 +45,16 @@ const Complaint = () => {
     <>
       <PageTitle title={"Complaint"} />
 
-      <div className="m-10">
+      <div className="md:m-10 my-10 mx-2">
         <div className="flex gap-4 text-primary items-center">
           <CircleAlert size={30} />
-          <h1 className=" text-3xl font-semibold font-winky ">
+          <h1 className=" md:text-3xl text-2xl font-semibold font-winky ">
             Complaint / Feedback
           </h1>
         </div>
       </div>
-      <div className="m-10">
-        <Tabs defaultValue="complaint" className="md:w-[75%] mx-auto">
+      <div className="m-1">
+        <Tabs defaultValue="complaint" className="md:w-[75%] mx-1  md:mx-auto">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="complaint">complaint</TabsTrigger>
             <TabsTrigger value="feedback">feedback</TabsTrigger>
@@ -114,7 +114,7 @@ const Complaint = () => {
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="feedback" className="md:w-[70%] w-full mx-auto">
+          <TabsContent value="feedback" className="md:w-[100%] w-90 mx-auto">
             <Card>
               <CardHeader>
                 <CardTitle className="text-2xl">Feedback</CardTitle>
@@ -129,8 +129,8 @@ const Complaint = () => {
                           <TooltipTrigger className="">
                             <Button
                               onClick={() => handleRatingClicked(emoji.id)}
-                              className={`md:text-4xl sm:mx-1 text-5xl  p-1 h-17 sm:h-14 bg-transparent hover:bg-amber-100 ${
-                                emojis === emoji.id ? "bg-amber-100" : ""
+                              className={`flex items-center justify-center rounded-full opacity-50 md:text-4xl sm:mx-1 text-4xl h-15 w-15 sm:h-14 sm:w-14 bg-transparent hover:opacity-100 hover:bg-transparent hover:scale-150 ${
+                                emojis === emoji.id ? "opacity-100" : ""
                               } `}
                             >
                               {emoji.emoji}

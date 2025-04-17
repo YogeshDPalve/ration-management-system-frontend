@@ -7,10 +7,12 @@ const Dashboard = () => {
     <>
       <PageTitle title={"Dashboard"} />
 
-      <div className="m-10">
+      <div className="md:m-10 my-10 mx-3">
         <div className="flex gap-4 text-primary items-center">
           <PanelsTopLeft size={30} />
-          <h1 className=" text-3xl font-semibold font-winky ">Dashboard</h1>
+          <h1 className="md:text-3xl t`ext-2xl font-semibold font-winky ">
+            Dashboard
+          </h1>
         </div>
       </div>
     </>

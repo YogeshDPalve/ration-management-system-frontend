@@ -19,6 +19,7 @@ import History from "./pages/History";
 import Complaint from "./pages/Complaint";
 import Profile from "./pages/Profile";
 import { ThemeProvider } from "./components/theme-provider";
+import HomePage from "./pages/HomePage";
 
 // function App() {
 //   return (
@@ -51,7 +52,11 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/",
+        path: "/ ",
+        element: <HomePage />,
+      },
+      {
+        path: "/login",
         element: <Login />,
       },
       {

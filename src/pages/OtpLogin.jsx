@@ -33,8 +33,8 @@ const OtpLogin = () => {
               <form>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Enter OTP</Label>
-                    <InputOTP maxLength={6}>
+                    <Label htmlFor="text">Enter OTP</Label>
+                    <InputOTP maxLength={6} >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
