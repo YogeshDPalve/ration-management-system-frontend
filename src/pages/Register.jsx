@@ -121,7 +121,7 @@ const Register = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full md:col-span-2">
-                    Login
+                    Register
                   </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">

@@ -88,23 +88,25 @@ const Notifications = () => {
     <>
       <PageTitle title={"Notifications"} />
 
-      <div className="m-10 flex items-center justify-between">
+      <div className="md:m-10 my-10 mx-3 flex gap-4 justify-between flex-col md:flex-row">
         <div className="flex gap-4 text-primary items-center">
           <MessageSquareMore size={30} />
-          <h1 className=" text-3xl font-semibold font-winky ">Notifications</h1>
+          <h1 className=" md:text-3xl text-2xl font-semibold font-winky ">
+            Notifications
+          </h1>
         </div>
-        <div className="flex gap-4">
-          <Button variant="outline" className="cursor-pointer">
-            Mark all as read
+        <div className="flex gap-4 ">
+          <Button variant="outline" className="cursor-pointer text-xs">
+            Mark All Read
           </Button>
-          <Button variant="destructive" className="cursor-pointer">
+          <Button variant="destructive" className="cursor-pointer text-xs">
             Delete All
           </Button>
         </div>
       </div>
-      <div className="m-10 text-primary lg:grid grid-cols-2">
+      <div className="m-2 md:px-10 text-primary lg:grid grid-cols-2">
         {notifications.map((notification) => (
-          <Card key={notification.id} className="m-2 gap-3">
+          <Card key={notification.id} className="m-2 p-3 px-0 gap-3">
             <CardHeader className="flex items-center justify-between">
               <CardTitle className="text-lg">{notification.type}</CardTitle>
               <CardDescription className="text-sm">
