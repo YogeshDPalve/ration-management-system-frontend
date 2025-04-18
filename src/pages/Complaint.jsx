@@ -121,7 +121,7 @@ const Complaint = () => {
                 <CardDescription>Provide your feedback here.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center-center justify-between overflow-auto h-18 md:h-auto">
+                <div className="flex items-center-center justify-between overflow-auto h-18 md:h-20">
                   {ratring.map((emoji) => (
                     <div className=" " key={emoji.id}>
                       <TooltipProvider>
@@ -129,8 +129,8 @@ const Complaint = () => {
                           <TooltipTrigger className="">
                             <Button
                               onClick={() => handleRatingClicked(emoji.id)}
-                              className={`flex items-center justify-center rounded-full opacity-50 md:text-4xl sm:mx-1 text-4xl h-15 w-15 sm:h-14 sm:w-14 bg-transparent hover:opacity-100 hover:bg-transparent hover:scale-150 ${
-                                emojis === emoji.id ? "opacity-100" : ""
+                              className={`flex items-center justify-center rounded-full opacity-50 md:text-4xl sm:mx-1 text-4xl h-15 w-15 sm:h-14 sm:w-14 bg-transparent hover:opacity-100 hover:bg-transparent hover:scale-140 ${
+                                emojis === emoji.id ? "opacity-100 scale-150" : ""
                               } `}
                             >
                               {emoji.emoji}
