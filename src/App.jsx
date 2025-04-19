@@ -52,7 +52,7 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "/ ",
+        path: "/",
         element: <HomePage />,
       },
       {
