@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
 import { useRegisterUserMutation } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 const Register = () => {
   const [formData, setFormData] = useState({
     rationId: "",
@@ -35,7 +36,7 @@ const Register = () => {
     }));
   };
 
-  const [registerUser, { data, isError, isLoading, isSuccess }] =
+  const [registerUser, { data, error, isLoading, isSuccess }] =
     useRegisterUserMutation();
 
   const handleRegistration = async (e) => {
@@ -43,7 +44,18 @@ const Register = () => {
     await registerUser(formData);
   };
 
-  useEffect(() => {}, [isLoading, data, isError, isSuccess]);
+  useEffect(() => {
+    if (isSuccess && data) {
+      // console.log(data);
+      toast.success(data.message || "Register Successfully");
+    }
+    if (error) {
+      // console.log(error.data.errors[0].msg);
+      toast.error(
+        error.data.message || error.data.errors[0].msg || "Something went wrong"
+      );
+    }
+  }, [isLoading, data, error, isSuccess]);
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Register"} />
