@@ -32,7 +32,7 @@ const Register = () => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: name === "fairPriceShopNumber" ? Number(value) : value,
+      [name]: value,
     }));
   };
 
