@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,11 +7,44 @@ import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
 import { useLoginUserMutation } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [loginUser, { data, error, isLoading }] = useLoginUserMutation();
-  const handleLogin = () => {};
+  const [formData, setFormData] = useState({
+    rationId: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const [loginUser, { data, error, isLoading, isSuccess }] =
+    useLoginUserMutation();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // console.log(formData);
+    await loginUser(formData);
+  };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      // console.log(data);
+      toast.success(data.message || "Login Successfully");
+      setTimeout(() => {
+        navigate("/login/otp-verification");
+      }, 2000);
+    }
+    if (error) {
+      // console.log(error);
+      toast.error(
+        error.data.message || error.data.errors[0].msg || "Something went wrong"
+      );
+    }
+  }, [isLoading, error, isSuccess]);
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <PageTitle title={"Login"} />
@@ -19,7 +52,7 @@ const Login = () => {
         <div className="flex flex-col gap-6">
           <Card className="overflow-hidden dark:bg-background">
             <CardContent className="grid p-0 md:grid-cols-2">
-              <form className="p-6 md:p-8">
+              <form className="p-6 md:p-8" onSubmit={handleLogin}>
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col items-center text-center">
                     <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -30,10 +63,11 @@ const Login = () => {
                   <div className="grid gap-2">
                     <Label htmlFor="email">Ration Id</Label>
                     <Input
-                      id="rationId"
+                      name="rationId"
                       type="text"
                       placeholder="123456"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
@@ -48,14 +82,14 @@ const Login = () => {
                         Forgot your password?
                       </Button>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                      name="password"
+                      type="password"
+                      required
+                      onChange={handleChange}
+                    />
                   </div>
-                  <Button
-                    onClick={() => navigate("/login/otp-verification")}
-                    type="submit"
-                    className="w-full"
-                    disabled={isLoading}
-                  >
+                  <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? (
                       <>
                         <Loader2 className="animate-spin w-4 h-4 " /> Please
