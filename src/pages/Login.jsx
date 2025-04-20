@@ -5,9 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
+import { useLoginUserMutation } from "@/features/api/authApi";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loginUser, { data, error, isLoading }] = useLoginUserMutation();
+  const handleLogin = () => {};
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <PageTitle title={"Login"} />
@@ -50,8 +54,16 @@ const Login = () => {
                     onClick={() => navigate("/login/otp-verification")}
                     type="submit"
                     className="w-full"
+                    disabled={isLoading}
                   >
-                    Login
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="animate-spin w-4 h-4 " /> Please
+                        Wait
+                      </>
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
                   <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                     <span className="relative z-10 bg-background px-2 text-muted-foreground">
@@ -98,10 +110,8 @@ const Login = () => {
                   </div>
                   <div className="text-center text-sm">
                     Don&apos;t have an account?{" "}
-                    <Link to="/register">
-                      <a href="#" className="underline underline-offset-4">
-                        Sign up
-                      </a>
+                    <Link to="/register" className="font-semibold">
+                      Sign up
                     </Link>
                   </div>
                 </div>

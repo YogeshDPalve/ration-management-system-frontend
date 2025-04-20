@@ -1,12 +1,11 @@
-const { createSlice } = require("@reduxjs/toolkit");
-
-initialState = {
+import { createSlice } from "@reduxjs/toolkit";
+const InitialState = {
   user: null,
   isAuthenticated: false,
 };
 const authSlice = createSlice({
   name: "authSlice",
-  initialState: initialState,
+  initialState: InitialState,
   reducers: {
     userLoggedIn: (state, action) => {
       state.user = action.payload.user;
