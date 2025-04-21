@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,7 +11,51 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
+import { useRegisterUserMutation } from "@/features/api/authApi";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 const Register = () => {
+  const [formData, setFormData] = useState({
+    rationId: "",
+    adharcardNumber: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    mobileNo: "",
+    email: "",
+    address: "",
+    fairPriceShopNumber: 0,
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const [registerUser, { data, error, isLoading, isSuccess }] =
+    useRegisterUserMutation();
+
+  const handleRegistration = async (e) => {
+    e.preventDefault();
+    await registerUser(formData);
+  };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      // console.log(data);
+      toast.success(data.message || "Register Successfully");
+    }
+    if (error) {
+      // console.log(error.data.errors[0].msg);
+      toast.error(
+        error.data.message || error.data.errors[0].msg || "Something went wrong"
+      );
+    }
+  }, [isLoading, data, error, isSuccess]);
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Register"} />
@@ -30,83 +74,97 @@ const Register = () => {
                   <div className="grid gap-2">
                     <Label>Ration Id</Label>
                     <Input
-                      id="rationId"
-                      type="text"
+                      name="rationId"
+                      type="number"
                       placeholder="653214565"
                       required
+                      // minLength={6}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label>Adharcard Number</Label>
                     <Input
-                      id="adharcardNumber"
-                      type="text"
+                      name="adharcardNumber"
+                      type="number"
+                      // minLength={12}
+                      // maxLength={12}
                       placeholder="653652147985"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="text">First Name</Label>
                     <Input
-                      id="firstName"
+                      name="firstName"
                       type="text"
                       placeholder="John"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="text">Middle Name</Label>
                     <Input
-                      id="middleName"
+                      name="middleName"
                       type="text"
                       placeholder="Denver"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="text">Last Name</Label>
                     <Input
-                      id="lastName"
+                      name="lastName"
                       type="text"
                       placeholder="Doe"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="text">Mobile Number</Label>
                     <Input
-                      id="mobileNo"
-                      type="text"
+                      name="mobileNo"
+                      type="number"
                       placeholder="9999999999"
                       required
+                      minLength={10}
+                      maxLength={10}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="text">Email</Label>
                     <Input
-                      id="email"
+                      name="email"
                       type="email"
                       placeholder="john@doe.com"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="text">Address</Label>
                     <Input
-                      id="address"
+                      name="address"
                       type="text"
                       placeholder="House 3, Ring road"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="text">Your Fair Price Shop Number</Label>
                     <Input
-                      id="fairPriceShopNumber"
+                      name="fairPriceShopNumber"
                       type="number"
                       min="1"
                       placeholder="42"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
@@ -114,22 +172,33 @@ const Register = () => {
                       <Label htmlFor="password">Password</Label>
                     </div>
                     <Input
-                      id="password"
+                      name="password"
                       type="password"
                       required
                       placeholder="****"
+                      onChange={handleChange}
                     />
                   </div>
-                  <Button type="submit" className="w-full md:col-span-2">
-                    Register
+                  <Button
+                    type="submit"
+                    className="w-full md:col-span-2"
+                    disabled={isLoading}
+                    onClick={handleRegistration}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="animate-spin w-4 h-4 " /> Please
+                        Wait
+                      </>
+                    ) : (
+                      "Register"
+                    )}
                   </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">
                   Already have an account?{" "}
-                  <Link to="/login">
-                    <a href="#" className="underline underline-offset-4">
-                      Sign in
-                    </a>
+                  <Link to="/login" className="font-semibold">
+                    Sign in
                   </Link>
                 </div>
               </form>

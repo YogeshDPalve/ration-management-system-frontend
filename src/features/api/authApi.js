@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { userLoggedIn } from "../authSlice";
-const USER_API = `${process.env.BASE_API}/api/v1/user`;
+import { BASE_API } from "@/constants/constants";
+
+const USER_API = `${BASE_API}/api/v1/user`;
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
@@ -24,12 +27,40 @@ export const authApi = createApi({
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          dispatch(userLoggedIn({ user: result.data.user }));
+          dispatch(userLoggedIn({ user: result.data.userInfo }));
         } catch (error) {
           console.log(error);
         }
       },
     }),
+    generateOtp: builder.mutation({
+      query: (rationId) => ({
+        url: "/generate-otp",
+        method: "POST",
+        body: rationId,
+      }),
+    }),
+    verifyOtp: builder.mutation({
+      query: (otp) => ({
+        url: "/verify-otp",
+        method: "POST",
+        body: otp,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (passwordData) => ({
+        data: console.log(passwordData),
+        url: "/reset-password",
+        method: "POST",
+        body: passwordData,
+      }),
+    }),
   }),
 });
-export const { useRegisterUserMutation, useLoginUserMutation   } = authApi;
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useGenerateOtpMutation,
+  useVerifyOtpMutation,
+  useResetPasswordMutation,
+} = authApi;

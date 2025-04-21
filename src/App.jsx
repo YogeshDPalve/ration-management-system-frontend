@@ -72,7 +72,7 @@ const appRouter = createBrowserRouter([
         element: <ForgotPassowrd />,
       },
       {
-        path: "/send-otp",
+        path: "/forgot-password/send-otp",
         element: <SendOtp />,
       },
       {

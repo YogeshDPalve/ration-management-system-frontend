@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   InputOTP,
@@ -16,7 +16,45 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import PageTitle from "@/components/PageTitle";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useVerifyOtpMutation } from "@/features/api/authApi";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const OtpLogin = () => {
+  const navigate = useNavigate();
+  const mobileNo = useSelector((store) => store.auth.user.mobileNo);
+
+  const [value, setValue] = useState("");
+
+  const [verifyOtp, { data, isLoading, error, isSuccess }] =
+    useVerifyOtpMutation();
+
+  const handleSubmitOtp = async (e) => {
+    try {
+      e.preventDefault();
+      if (!value.trim()) {
+        toast.error("Input fields cannot be empty.");
+        return;
+      }
+      await verifyOtp({ mobileNo, otp: value });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      toast.success(data.message || "OTP verified Successfully");
+      navigate("/dashboard");
+    }
+    if (error) {
+      toast.error(
+        error.data.message || error.data.errors[0].msg || "Something went wrong"
+      );
+    }
+  }, [isLoading, error, isSuccess]);
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Login via OTP"} />
@@ -30,11 +68,15 @@ const OtpLogin = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form>
+              <form onSubmit={handleSubmitOtp}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
                     <Label htmlFor="text">Enter OTP</Label>
-                    <InputOTP maxLength={6} >
+                    <InputOTP
+                      maxLength={6}
+                      value={value}
+                      onChange={(value) => setValue(value)}
+                    >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
@@ -49,8 +91,15 @@ const OtpLogin = () => {
                     </InputOTP>
                   </div>
 
-                  <Button type="submit" className="w-full">
-                    Login
+                  <Button disabled={isLoading} type="submit" className="w-full">
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="animate-spin w-5 h-5 mr-2" /> Please
+                        wait
+                      </>
+                    ) : (
+                      "Verify OTP"
+                    )}
                   </Button>
                 </div>
               </form>

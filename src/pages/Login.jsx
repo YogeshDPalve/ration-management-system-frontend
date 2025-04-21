@@ -1,13 +1,76 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
+import {
+  useGenerateOtpMutation,
+  useLoginUserMutation,
+} from "@/features/api/authApi";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    rationId: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const [loginUser, { data, error, isLoading, isSuccess }] =
+    useLoginUserMutation();
+  const [
+    generateOtp,
+    {
+      data: generateOtpData,
+      error: generateOtpError,
+      isSuccess: generateOtpSuccess,
+      isLoading: generateOtpIsLoading,
+    },
+  ] = useGenerateOtpMutation();
+  const handleLogin = async (e) => {
+    try {
+      e.preventDefault();
+      await loginUser(formData);
+      await generateOtp({ rationId: formData.rationId });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // ! fix two useeffects
+  // useEffect for login user
+  useEffect(() => {
+    if (isSuccess && data) {
+      toast.success(data.message || "Login Successfully");
+    }
+    if (error) {
+      toast.error(
+        error.data.message || error.data.errors[0].msg || "Something went wrong"
+      );
+    }
+  }, [isLoading, error, isSuccess]);
+
+  // useEffect for generate otp
+  useEffect(() => {
+    if (generateOtpSuccess && generateOtpData) {
+      toast.success(generateOtpData.message || "OTP send Successfully");
+    }
+    if (generateOtpError) {
+      toast.error(
+        generateOtpError.data.message ||
+          generateOtpError.data.errors[0].msg ||
+          "Something went wrong"
+      );
+    }
+  }, [generateOtpError, generateOtpSuccess, generateOtpIsLoading]);
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <PageTitle title={"Login"} />
@@ -15,7 +78,7 @@ const Login = () => {
         <div className="flex flex-col gap-6">
           <Card className="overflow-hidden dark:bg-background">
             <CardContent className="grid p-0 md:grid-cols-2">
-              <form className="p-6 md:p-8">
+              <form className="p-6 md:p-8" onSubmit={handleLogin}>
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col items-center text-center">
                     <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -26,10 +89,11 @@ const Login = () => {
                   <div className="grid gap-2">
                     <Label htmlFor="email">Ration Id</Label>
                     <Input
-                      id="rationId"
+                      name="rationId"
                       type="text"
                       placeholder="123456"
                       required
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="grid gap-2">
@@ -37,21 +101,29 @@ const Login = () => {
                       <Label htmlFor="password">Password</Label>
 
                       <Button
-                        onClick={() => navigate("/send-otp")}
+                        onClick={() => navigate("/forgot-password/send-otp")}
                         variant="link"
                         className="ml-auto text-sm underline-offset-2 hover:underline"
                       >
                         Forgot your password?
                       </Button>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                      name="password"
+                      type="password"
+                      required
+                      onChange={handleChange}
+                    />
                   </div>
-                  <Button
-                    onClick={() => navigate("/login/otp-verification")}
-                    type="submit"
-                    className="w-full"
-                  >
-                    Login
+                  <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="animate-spin w-4 h-4 " /> Please
+                        Wait
+                      </>
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
                   <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                     <span className="relative z-10 bg-background px-2 text-muted-foreground">
@@ -98,10 +170,8 @@ const Login = () => {
                   </div>
                   <div className="text-center text-sm">
                     Don&apos;t have an account?{" "}
-                    <Link to="/register">
-                      <a href="#" className="underline underline-offset-4">
-                        Sign up
-                      </a>
+                    <Link to="/register" className="font-semibold">
+                      Sign up
                     </Link>
                   </div>
                 </div>
