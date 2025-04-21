@@ -27,12 +27,23 @@ export const authApi = createApi({
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          dispatch(userLoggedIn({ user: result.data.user }));
+          dispatch(userLoggedIn({ user: result.data.userInfo }));
         } catch (error) {
           console.log(error);
         }
       },
     }),
+    generateOtp: builder.mutation({
+      query: (rationId) => ({
+        url: "/generate-otp",
+        method: "POST",
+        body: rationId,
+      }),
+    }),
   }),
 });
-export const { useRegisterUserMutation, useLoginUserMutation } = authApi;
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useGenerateOtpMutation,
+} = authApi;

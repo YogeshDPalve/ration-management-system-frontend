@@ -5,7 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
-import { useLoginUserMutation } from "@/features/api/authApi";
+import {
+  useGenerateOtpMutation,
+  useLoginUserMutation,
+} from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -24,27 +27,52 @@ const Login = () => {
   };
   const [loginUser, { data, error, isLoading, isSuccess }] =
     useLoginUserMutation();
+  const [
+    generateOtp,
+    {
+      data: generateOtpData,
+      error: generateOtpError,
+      isSuccess: generateOtpSuccess,
+      isLoading: generateOtpIsLoading,
+    },
+  ] = useGenerateOtpMutation();
   const handleLogin = async (e) => {
     e.preventDefault();
     // console.log(formData);
     await loginUser(formData);
+    await generateOtp({ rationId: formData.rationId });
   };
 
   useEffect(() => {
     if (isSuccess && data) {
-      // console.log(data);
       toast.success(data.message || "Login Successfully");
-      setTimeout(() => {
-        navigate("/login/otp-verification");
-      }, 2000);
     }
     if (error) {
-      // console.log(error);
       toast.error(
         error.data.message || error.data.errors[0].msg || "Something went wrong"
       );
     }
-  }, [isLoading, error, isSuccess]);
+    if (generateOtpSuccess && generateOtpData) {
+      toast.success(generateOtpData.message || "OTP send Successfully");
+      setTimeout(() => {
+        navigate("/login/otp-verification");
+      }, 3000);
+    }
+    if (generateOtpError) {
+      toast.error(
+        generateOtpError.data.message ||
+          generateOtpError.data.errors[0].msg ||
+          "Something went wrong"
+      );
+    }
+  }, [
+    isLoading,
+    error,
+    isSuccess,
+    generateOtpError,
+    generateOtpSuccess,
+    generateOtpIsLoading,
+  ]);
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <PageTitle title={"Login"} />
