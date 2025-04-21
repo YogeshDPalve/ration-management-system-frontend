@@ -40,10 +40,18 @@ export const authApi = createApi({
         body: rationId,
       }),
     }),
+    verifyOtp: builder.mutation({
+      query: ({ mobileNo, otp }) => ({
+        url: "/verify-otp",
+        method: "POST",
+        body: { mobileNo, otp },
+      }),
+    }),
   }),
 });
 export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useGenerateOtpMutation,
+  useVerifyOtpMutation,
 } = authApi;

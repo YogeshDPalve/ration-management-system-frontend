@@ -17,12 +17,21 @@ import {
 import { Label } from "@/components/ui/label";
 import PageTitle from "@/components/PageTitle";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useVerifyOtpMutation } from "@/features/api/authApi";
 
 const OtpLogin = () => {
-  const isLoading = false;
   const [value, setValue] = useState("");
+
+  const [verifyOtp, { data, isLoading, error, isSuccess }] =
+    useVerifyOtpMutation();
+
   const handleSubmitOtp = (e) => {
     e.preventDefault();
+    if (!value.trim()) {
+      toast.error("Input fields cannot be empty.");
+      return;
+    }
     console.log(value);
   };
   return (
