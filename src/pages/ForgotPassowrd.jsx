@@ -17,7 +17,59 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PageTitle from "@/components/PageTitle";
+import { Link, useLocation } from "react-router-dom";
+import { useResetPasswordMutation } from "@/features/api/authApi";
+import { toast } from "sonner";
 
+const ForgotPassowrd = () => {
+  const location = useLocation();
+  const rationId = location.state?.rationId;
+  const [value, setValue] = useState("");
+  const [formData, setFormData] = useState({
+    password: "",
+    confirmPassword: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const [resetPassword, { data, isSuccess, error, isLoading }] =
+    useResetPasswordMutation();
+  const handleSumbit = (e) => {
+    try {
+      e.preventDefault();
+      if (!value.trim()) {
+        toast.error("OTP fields cannot be empty.");
+        return;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        toast.error("password and confirm password must be same");
+        return;
+      }
+      resetPassword({
+        rationId,
+        otp: value,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (isSuccess && data) {
+      toast.success(data.message || "Password Reset Successfully");
+    }
+    if (error) {
+      toast.error(
+        error.data.message || error.data.errors[0].msg || "Something went wrong"
+      );
+    }
+  }, [isLoading, error, isSuccess]);
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Reset Password"} />
