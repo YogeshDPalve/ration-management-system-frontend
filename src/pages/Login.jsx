@@ -38,11 +38,11 @@ const Login = () => {
   ] = useGenerateOtpMutation();
   const handleLogin = async (e) => {
     e.preventDefault();
-    // console.log(formData);
     await loginUser(formData);
     await generateOtp({ rationId: formData.rationId });
   };
 
+  // useEffect for login user
   useEffect(() => {
     if (isSuccess && data) {
       toast.success(data.message || "Login Successfully");
@@ -52,11 +52,15 @@ const Login = () => {
         error.data.message || error.data.errors[0].msg || "Something went wrong"
       );
     }
+  }, [isLoading, error, isSuccess]);
+
+  // useEffect for generate otp
+  useEffect(() => {
     if (generateOtpSuccess && generateOtpData) {
       toast.success(generateOtpData.message || "OTP send Successfully");
       setTimeout(() => {
         navigate("/login/otp-verification");
-      }, 3000);
+      }, 2000);
     }
     if (generateOtpError) {
       toast.error(
@@ -65,14 +69,7 @@ const Login = () => {
           "Something went wrong"
       );
     }
-  }, [
-    isLoading,
-    error,
-    isSuccess,
-    generateOtpError,
-    generateOtpSuccess,
-    generateOtpIsLoading,
-  ]);
+  }, [generateOtpError, generateOtpSuccess, generateOtpIsLoading]);
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <PageTitle title={"Login"} />

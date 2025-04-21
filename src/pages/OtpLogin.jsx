@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   InputOTP,
@@ -19,21 +19,38 @@ import PageTitle from "@/components/PageTitle";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useVerifyOtpMutation } from "@/features/api/authApi";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const OtpLogin = () => {
+  const navigate = useNavigate();
+  const mobileNo = useSelector((store) => store.auth.user.mobileNo);
+
   const [value, setValue] = useState("");
 
   const [verifyOtp, { data, isLoading, error, isSuccess }] =
     useVerifyOtpMutation();
 
-  const handleSubmitOtp = (e) => {
+  const handleSubmitOtp = async (e) => {
     e.preventDefault();
     if (!value.trim()) {
       toast.error("Input fields cannot be empty.");
       return;
     }
-    console.log(value);
+    await verifyOtp({ mobileNo, otp: value });
   };
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      toast.success(data.message || "OTP verified Successfully");
+      navigate("/dashboard");
+    }
+    if (error) {
+      toast.error(
+        error.data.message || error.data.errors[0].msg || "Something went wrong"
+      );
+    }
+  }, [isLoading, error, isSuccess]);
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Login via OTP"} />
