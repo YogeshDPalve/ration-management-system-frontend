@@ -20,6 +20,7 @@ import PageTitle from "@/components/PageTitle";
 import { Link, useLocation } from "react-router-dom";
 import { useResetPasswordMutation } from "@/features/api/authApi";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const ForgotPassowrd = () => {
   const location = useLocation();
@@ -37,11 +38,10 @@ const ForgotPassowrd = () => {
     }));
   };
 
-  const [resetPassword, { data, isSuccess, error, isLoading }] =
-    useResetPasswordMutation();
-  const handleSumbit = (e) => {
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const handleSumbit = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       if (!value.trim()) {
         toast.error("OTP fields cannot be empty.");
         return;
@@ -50,26 +50,24 @@ const ForgotPassowrd = () => {
         toast.error("password and confirm password must be same");
         return;
       }
-      resetPassword({
+      const data = await resetPassword({
         rationId,
         otp: value,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
-      });
+      }).unwrap();
+
+      toast.success(data?.message || "Password Reset Successfully");
     } catch (error) {
       console.log(error);
-    }
-  };
-  useEffect(() => {
-    if (isSuccess && data) {
-      toast.success(data.message || "Password Reset Successfully");
-    }
-    if (error) {
       toast.error(
-        error.data.message || error.data.errors[0].msg || "Something went wrong"
+        error?.data?.message ||
+          error?.data?.errors[0]?.msg ||
+          "Something went wrong"
       );
     }
-  }, [isLoading, error, isSuccess]);
+  };
+
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Reset Password"} />
@@ -127,8 +125,15 @@ const ForgotPassowrd = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <Button type="submit" className="w-full">
-                    Reset Password
+                  <Button type="submit" disabled={isLoading} className="w-full">
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="animate-spin" />
+                        Please wait
+                      </>
+                    ) : (
+                      "Reset Password"
+                    )}
                   </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">

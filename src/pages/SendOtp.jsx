@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PageTitle from "@/components/PageTitle";
 import { Link, useNavigate } from "react-router-dom";
-import { useGenerateOtpMutation } from "@/features/api/authApi";
+import { useGenerateResetOtpMutation } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -20,7 +20,7 @@ const SendOtp = () => {
   const navigate = useNavigate();
   const [rationId, setRationId] = useState("");
   const [generateOtp, { data, error, isSuccess, isLoading }] =
-    useGenerateOtpMutation();
+    useGenerateResetOtpMutation();
 
   useEffect(() => {
     if (isSuccess && data) {
