@@ -32,12 +32,16 @@ const OtpLogin = () => {
     useVerifyOtpMutation();
 
   const handleSubmitOtp = async (e) => {
-    e.preventDefault();
-    if (!value.trim()) {
-      toast.error("Input fields cannot be empty.");
-      return;
+    try {
+      e.preventDefault();
+      if (!value.trim()) {
+        toast.error("Input fields cannot be empty.");
+        return;
+      }
+      await verifyOtp({ mobileNo, otp: value });
+    } catch (error) {
+      console.log(error);
     }
-    await verifyOtp({ mobileNo, otp: value });
   };
 
   useEffect(() => {

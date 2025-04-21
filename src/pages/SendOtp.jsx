@@ -25,7 +25,7 @@ const SendOtp = () => {
   useEffect(() => {
     if (isSuccess && data) {
       toast.success(data.message || "Login Successfully");
-      navigate("/reset-password", { state: rationId });
+      navigate("/reset-password", { state: { rationId } });
     }
     if (error) {
       toast.error(
@@ -34,8 +34,12 @@ const SendOtp = () => {
     }
   }, [isLoading, error, isSuccess]);
   const handleSentOtp = async (e) => {
-    e.preventDefault();
-    await generateOtp({ rationId });
+    try {
+      e.preventDefault();
+      await generateOtp({ rationId });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   InputOTP,
@@ -17,8 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PageTitle from "@/components/PageTitle";
-import { Link } from "react-router-dom";
-const ForgotPassowrd = () => {
+
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Reset Password"} />
@@ -32,11 +31,15 @@ const ForgotPassowrd = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form>
+              <form onSubmit={handleSumbit}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
                     <Label htmlFor="email">Enter OTP</Label>
-                    <InputOTP maxLength={6}>
+                    <InputOTP
+                      maxLength={6}
+                      value={value}
+                      onChange={(value) => setValue(value)}
+                    >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
@@ -54,13 +57,23 @@ const ForgotPassowrd = () => {
                     <div className="flex items-center">
                       <Label htmlFor="password">Password</Label>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                      name="password"
+                      type="password"
+                      required
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="grid gap-2">
                     <div className="flex items-center">
                       <Label htmlFor="password">Confirm Password</Label>
                     </div>
-                    <Input id="ConfirmPassword" type="password" required />
+                    <Input
+                      name="confirmPassword"
+                      type="password"
+                      required
+                      onChange={handleChange}
+                    />
                   </div>
                   <Button type="submit" className="w-full">
                     Reset Password

@@ -47,11 +47,12 @@ export const authApi = createApi({
         body: otp,
       }),
     }),
-    verifyOtp: builder.mutation({
-      query: (otp) => ({
-        url: "/verify-otp",
+    resetPassword: builder.mutation({
+      query: (passwordData) => ({
+        data: console.log(passwordData),
+        url: "/reset-password",
         method: "POST",
-        body: otp,
+        body: passwordData,
       }),
     }),
   }),
@@ -61,4 +62,5 @@ export const {
   useLoginUserMutation,
   useGenerateOtpMutation,
   useVerifyOtpMutation,
+  useResetPasswordMutation,
 } = authApi;

@@ -37,11 +37,15 @@ const Login = () => {
     },
   ] = useGenerateOtpMutation();
   const handleLogin = async (e) => {
-    e.preventDefault();
-    await loginUser(formData);
-    await generateOtp({ rationId: formData.rationId });
+    try {
+      e.preventDefault();
+      await loginUser(formData);
+      await generateOtp({ rationId: formData.rationId });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  // ! fix two useeffects
   // useEffect for login user
   useEffect(() => {
     if (isSuccess && data) {
@@ -58,9 +62,6 @@ const Login = () => {
   useEffect(() => {
     if (generateOtpSuccess && generateOtpData) {
       toast.success(generateOtpData.message || "OTP send Successfully");
-      setTimeout(() => {
-        navigate("/login/otp-verification");
-      }, 2000);
     }
     if (generateOtpError) {
       toast.error(
