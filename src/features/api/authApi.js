@@ -47,6 +47,13 @@ export const authApi = createApi({
         body: otp,
       }),
     }),
+    verifyOtp: builder.mutation({
+      query: (otp) => ({
+        url: "/verify-otp",
+        method: "POST",
+        body: otp,
+      }),
+    }),
   }),
 });
 export const {

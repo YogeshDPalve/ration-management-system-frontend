@@ -11,8 +11,7 @@ const MainLayout = () => {
     "/login",
     "/register",
     "/send-otp",
-    "/forgot-password",
-    "/forgot-password/reset-password",
+    "/reset-password",
     "/forgot-password/send-otp",
     "/login/otp-verification",
   ];
