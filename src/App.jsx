@@ -1,11 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassowrd from "./pages/ForgotPassowrd";
@@ -20,6 +14,7 @@ import Complaint from "./pages/Complaint";
 import Profile from "./pages/Profile";
 import { ThemeProvider } from "./components/theme-provider";
 import HomePage from "./pages/HomePage";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 // function App() {
 //   return (
@@ -44,7 +39,7 @@ const appRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "/dashboard",
+        path: "dashboard",
         element: (
           <>
             <Dashboard />
@@ -53,81 +48,82 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/",
-        element: <HomePage />,
+        element: <ProtectedRoutes />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/login/otp-verification",
+        path: "login/otp-verification",
         element: <OtpLogin />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
       },
       {
-        path: "/reset-password",
+        path: "reset-password",
         element: <ForgotPassowrd />,
       },
       {
-        path: "/forgot-password/send-otp",
+        path: "forgot-password/send-otp",
         element: <SendOtp />,
       },
       {
-        path: "/notifications",
+        path: "notifications",
         element: <Notifications />,
       },
       {
-        path: "/history",
+        path: "history",
         element: <History />,
       },
       {
-        path: "/complaint",
+        path: "complaint",
         element: <Complaint />,
       },
       {
-        path: "/profile",
+        path: "profile",
         element: <Profile />,
       },
 
       //       //* Admin Routes strar from here
-
-      // {
-      //   path: "admin",
-      //   element: (
-      //     <AdminRoute>
-      //       <Sidebar />
-      //     </AdminRoute>
-      //   ),
-      //   children: [
-      //     {
-      //       path: "dashboard",
-      //       element: <Dashboard />,
-      //     },
-      //     {
-      //       path: "course",
-      //       element: <CourseTable />,
-      //     },
-      //     {
-      //       path: "course/create",
-      //       element: <AddCourse />,
-      //     },
-      //     {
-      //       path: "course/:courseId",
-      //       element: <EditCourse />,
-      //     },
-      //     {
-      //       path: "course/:courseId/lecture",
-      //       element: <CreateLecture />,
-      //     },
-      //     {
-      //       path: "course/:courseId/lecture/:lectureId",
-      //       element: <EditLecture />,
-      //     },
-      //   ],
-      // },
+      {
+        // {
+        //   path: "admin",
+        //   element: (
+        //     <AdminRoute>
+        //       <Sidebar />
+        //     </AdminRoute>
+        //   ),
+        //   children: [
+        //     {
+        //       path: "dashboard",
+        //       element: <Dashboard />,
+        //     },
+        //     {
+        //       path: "course",
+        //       element: <CourseTable />,
+        //     },
+        //     {
+        //       path: "course/create",
+        //       element: <AddCourse />,
+        //     },
+        //     {
+        //       path: "course/:courseId",
+        //       element: <EditCourse />,
+        //     },
+        //     {
+        //       path: "course/:courseId/lecture",
+        //       element: <CreateLecture />,
+        //     },
+        //     {
+        //       path: "course/:courseId/lecture/:lectureId",
+        //       element: <EditLecture />,
+        //     },
+        //   ],
+        // },
+      },
     ],
   },
 ]);
