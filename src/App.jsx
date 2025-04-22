@@ -43,50 +43,30 @@ const appRouter = createBrowserRouter([
         element: <HomePage />,
       },
       {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "login/otp-verification",
+        element: <OtpLogin />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "reset-password",
+        element: <ForgotPassowrd />,
+      },
+      {
+        path: "forgot-password/send-otp",
+        element: <SendOtp />,
+      },
+      {
         path: "dashboard",
         element: (
           <ProtectedRoutes>
             <Dashboard />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "login",
-        element: (
-          <ProtectedRoutes>
-            <Login />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "login/otp-verification",
-        element: (
-          <ProtectedRoutes>
-            <OtpLogin />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "register",
-        element: (
-          <ProtectedRoutes>
-            <Register />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "reset-password",
-        element: (
-          <ProtectedRoutes>
-            <ForgotPassowrd />
-          </ProtectedRoutes>
-        ),
-      },
-      {
-        path: "forgot-password/send-otp",
-        element: (
-          <ProtectedRoutes>
-            <SendOtp />
           </ProtectedRoutes>
         ),
       },
