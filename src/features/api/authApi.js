@@ -56,10 +56,15 @@ export const authApi = createApi({
     }),
     resetPassword: builder.mutation({
       query: (passwordData) => ({
-        data: console.log(passwordData),
         url: "/reset-password",
         method: "PUT",
         body: passwordData,
+      }),
+    }),
+    getUser: builder.query({
+      query: () => ({
+        url: "/get-user-info",
+        method: "GET",
       }),
     }),
   }),
@@ -71,4 +76,5 @@ export const {
   useGenerateResetOtpMutation,
   useVerifyOtpMutation,
   useResetPasswordMutation,
+  useGetUserQuery,
 } = authApi;
