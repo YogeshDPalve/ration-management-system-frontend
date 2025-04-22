@@ -81,6 +81,7 @@ const Login = () => {
                       <Button
                         onClick={() => navigate("/forgot-password/send-otp")}
                         variant="link"
+                        type="button"
                         className="ml-auto text-sm underline-offset-2 hover:underline"
                       >
                         Forgot your password?
