@@ -154,15 +154,15 @@ const Profile = () => {
     <>
       <PageTitle title={"Profile"} />
 
-      <div className="m-10 text-primary">
+      <div className="md:m-10 my-10 mx-3 md:mx-5 text-primary">
         {/* page Title */}
         <div className="flex gap-4 text-primary items-center">
           <CircleUserRound size={30} />
           <h1 className=" text-3xl font-semibold font-winky ">Profile</h1>
         </div>
         {/* Basic information  */}
-        <div className="grid lg:grid-cols-2 gap-5 grid-cols-1">
-          <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
+        <div className="grid lg:grid-cols-2 gap-5 grid-cols-1 ">
+          <div className="border mt-5 sm:p-5 p-3 bg-[#111113] tracking-tight rounded-sm sm:w-auto ">
             <div className="flex items-center gap-5 ">
               <LibraryBig className="text-muted-foreground" size={20} />
               <h2 className="font-bold text-2xl">Account Information</h2>
@@ -208,7 +208,7 @@ const Profile = () => {
                   <p className="text-sm">{user.email} </p>
                 </div>
               </div>
-              <Separator className="my-2 " />
+              <Separator className="my-2" />
               <div className="p-2">
                 <div className=" flex items-center justify-between">
                   <h4 className="text-md font-semibold">
@@ -220,7 +220,7 @@ const Profile = () => {
             </div>
           </div>
           {/* Billing */}
-          <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
+          <div className="border mt-5 sm:p-5 p-3 bg-[#111113] tracking-tight rounded-sm">
             <div className="flex items-center gap-5 ">
               <ReceiptIndianRupee className="text-muted-foreground" size={20} />
               <h2 className="font-bold text-2xl">Billing</h2>
@@ -229,7 +229,7 @@ const Profile = () => {
               Billing history about your account
             </p>
             <Separator className="mt-5 mb-2 " />
-            <CardContent className='mt-10 px-0'>
+            <CardContent className="mt-10 px-0">
               <ChartContainer config={chartConfig}>
                 <AreaChart
                   accessibilityLayer
@@ -267,7 +267,7 @@ const Profile = () => {
           </div>
         </div>
         {/* Family Members */}
-        <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm  ">
+        <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
           <div className="flex items-center gap-5 ">
             <Users className="text-muted-foreground " size={20} />
             <h2 className="font-bold text-2xl">Family Members</h2>
@@ -283,7 +283,7 @@ const Profile = () => {
                   <TableHead>Name</TableHead>
                   <TableHead>Age</TableHead>
                   <TableHead className="text-center">Gender</TableHead>
-                  <TableHead className="text-center">
+                  <TableHead className="text-center hidden md:block">
                     AdharCard Number
                   </TableHead>
                   <TableHead>Relation</TableHead>
@@ -295,9 +295,9 @@ const Profile = () => {
                     <TableCell>{member.fullName}</TableCell>
                     <TableCell>{member.age}</TableCell>
                     <TableCell className="text-center">
-                      {member.gender}{" "}
+                      {member.gender}
                     </TableCell>
-                    <TableCell className="text-center">
+                    <TableCell className="text-center  hidden md:block">
                       {member.adharCard}
                     </TableCell>
                     <TableCell>{member.relation}</TableCell>
