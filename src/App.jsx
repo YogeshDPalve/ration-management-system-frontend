@@ -14,7 +14,7 @@ import Complaint from "./pages/Complaint";
 import Profile from "./pages/Profile";
 import { ThemeProvider } from "./components/theme-provider";
 import HomePage from "./pages/HomePage";
-import ProtectedRoutes from "./components/ProtectedRoutes";
+import { ProtectedRoutes } from "./components/ProtectedRoutes";
 
 // function App() {
 //   return (
@@ -39,52 +39,88 @@ const appRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
         path: "dashboard",
         element: (
-          <>
+          <ProtectedRoutes>
             <Dashboard />
-          </>
+          </ProtectedRoutes>
         ),
       },
       {
-        path: "/",
-        element: <ProtectedRoutes />,
-      },
-      {
         path: "login",
-        element: <Login />,
+        element: (
+          <ProtectedRoutes>
+            <Login />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "login/otp-verification",
-        element: <OtpLogin />,
+        element: (
+          <ProtectedRoutes>
+            <OtpLogin />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "register",
-        element: <Register />,
+        element: (
+          <ProtectedRoutes>
+            <Register />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "reset-password",
-        element: <ForgotPassowrd />,
+        element: (
+          <ProtectedRoutes>
+            <ForgotPassowrd />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "forgot-password/send-otp",
-        element: <SendOtp />,
+        element: (
+          <ProtectedRoutes>
+            <SendOtp />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "notifications",
-        element: <Notifications />,
+        element: (
+          <ProtectedRoutes>
+            <Notifications />,
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "history",
-        element: <History />,
+        element: (
+          <ProtectedRoutes>
+            <History />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "complaint",
-        element: <Complaint />,
+        element: (
+          <ProtectedRoutes>
+            <Complaint />,
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <ProtectedRoutes>
+            <Profile />,
+          </ProtectedRoutes>
+        ),
       },
 
       //       //* Admin Routes strar from here
