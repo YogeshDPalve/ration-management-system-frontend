@@ -36,26 +36,22 @@ const Register = () => {
     }));
   };
 
-  const [registerUser, { data, error, isLoading, isSuccess }] =
-    useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   const handleRegistration = async (e) => {
-    e.preventDefault();
-    await registerUser(formData);
-  };
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      // console.log(data);
-      toast.success(data.message || "Register Successfully");
-    }
-    if (error) {
-      // console.log(error.data.errors[0].msg);
+    try {
+      e.preventDefault();
+      const registerData = await registerUser(formData).unwrap();
+      toast.success(registerData?.message || "Register Successfully");
+    } catch (error) {
       toast.error(
-        error.data.message || error.data.errors[0].msg || "Something went wrong"
+        error?.data?.message ||
+          error?.data?.errors[0]?.msg ||
+          "Something went wrong"
       );
     }
-  }, [isLoading, data, error, isSuccess]);
+  };
+
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Register"} />

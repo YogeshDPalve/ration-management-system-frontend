@@ -33,9 +33,16 @@ export const authApi = createApi({
         }
       },
     }),
-    generateOtp: builder.mutation({
+    generateLoginOtp: builder.mutation({
       query: (rationId) => ({
-        url: "/generate-otp",
+        url: "/generate-login-otp",
+        method: "POST",
+        body: rationId,
+      }),
+    }),
+    generateResetOtp: builder.mutation({
+      query: (rationId) => ({
+        url: "/generate-reset-otp",
         method: "POST",
         body: rationId,
       }),
@@ -51,7 +58,7 @@ export const authApi = createApi({
       query: (passwordData) => ({
         data: console.log(passwordData),
         url: "/reset-password",
-        method: "POST",
+        method: "PUT",
         body: passwordData,
       }),
     }),
@@ -60,7 +67,8 @@ export const authApi = createApi({
 export const {
   useRegisterUserMutation,
   useLoginUserMutation,
-  useGenerateOtpMutation,
+  useGenerateLoginOtpMutation,
+  useGenerateResetOtpMutation,
   useVerifyOtpMutation,
   useResetPasswordMutation,
 } = authApi;

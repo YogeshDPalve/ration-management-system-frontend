@@ -28,8 +28,7 @@ const OtpLogin = () => {
 
   const [value, setValue] = useState("");
 
-  const [verifyOtp, { data, isLoading, error, isSuccess }] =
-    useVerifyOtpMutation();
+  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
 
   const handleSubmitOtp = async (e) => {
     try {
@@ -38,23 +37,19 @@ const OtpLogin = () => {
         toast.error("Input fields cannot be empty.");
         return;
       }
-      await verifyOtp({ mobileNo, otp: value });
-    } catch (error) {
-      console.log(error);
+      const data = await verifyOtp({ mobileNo, otp: value }).unwrap();
+      toast.success(data.message || "OTP verified Successfully");
+      navigate("/dashboard");
+    } catch (err) {
+      toast.error(
+        err?.data?.message ||
+          err?.data?.errors?.[0]?.msg ||
+          "Something went wrong"
+      );
+      console.error(err);
     }
   };
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      toast.success(data.message || "OTP verified Successfully");
-      navigate("/dashboard");
-    }
-    if (error) {
-      toast.error(
-        error.data.message || error.data.errors[0].msg || "Something went wrong"
-      );
-    }
-  }, [isLoading, error, isSuccess]);
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <PageTitle title={"Login via OTP"} />

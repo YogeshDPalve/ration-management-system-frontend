@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
 import {
-  useGenerateOtpMutation,
+  useGenerateLoginOtpMutation,
   useLoginUserMutation,
 } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
@@ -25,52 +25,30 @@ const Login = () => {
       [name]: value,
     }));
   };
-  const [loginUser, { data, error, isLoading, isSuccess }] =
-    useLoginUserMutation();
-  const [
-    generateOtp,
-    {
-      data: generateOtpData,
-      error: generateOtpError,
-      isSuccess: generateOtpSuccess,
-      isLoading: generateOtpIsLoading,
-    },
-  ] = useGenerateOtpMutation();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [generateOtp] = useGenerateLoginOtpMutation();
   const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      await loginUser(formData);
-      await generateOtp({ rationId: formData.rationId });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // ! fix two useeffects
-  // useEffect for login user
-  useEffect(() => {
-    if (isSuccess && data) {
-      toast.success(data.message || "Login Successfully");
-    }
-    if (error) {
-      toast.error(
-        error.data.message || error.data.errors[0].msg || "Something went wrong"
-      );
-    }
-  }, [isLoading, error, isSuccess]);
+      const loginData = await loginUser(formData).unwrap(); // login successful
+      toast.success(loginData.message || "Login Successfully");
 
-  // useEffect for generate otp
-  useEffect(() => {
-    if (generateOtpSuccess && generateOtpData) {
-      toast.success(generateOtpData.message || "OTP send Successfully");
-    }
-    if (generateOtpError) {
+      const otpData = await generateOtp({
+        rationId: formData.rationId,
+      }).unwrap(); // generate OTP
+      toast.success(otpData.message || "OTP sent successfully");
+
+      navigate("/login/otp-verification");
+    } catch (err) {
       toast.error(
-        generateOtpError.data.message ||
-          generateOtpError.data.errors[0].msg ||
+        err?.data?.message ||
+          err?.data?.errors?.[0]?.msg ||
           "Something went wrong"
       );
+      console.error(err);
     }
-  }, [generateOtpError, generateOtpSuccess, generateOtpIsLoading]);
+  };
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <PageTitle title={"Login"} />
