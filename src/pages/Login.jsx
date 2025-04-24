@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,11 @@ import {
 } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  const user = useSelector((store) => store.auth);
+  console.log(user);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     rationId: "",

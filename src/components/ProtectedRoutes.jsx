@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 
 export const ProtectedRoutes = ({ children }) => {
   const { isAuthenticated } = useSelector((store) => store.auth);
+  console.log("protected routes authenticate", isAuthenticated);
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
@@ -15,4 +16,5 @@ export const AuthenticatedUser = ({ children }) => {
   if (isAuthenticated) {
     return <Navigate to={"/dashboard"} />;
   }
+  return children;
 };

@@ -89,16 +89,16 @@ const appRouter = createBrowserRouter([
       {
         path: "complaint",
         element: (
-          <ProtectedRoutes>
-            <Complaint />,
-          </ProtectedRoutes>
+          // <ProtectedRoutes>
+          <Complaint />
+          // </ProtectedRoutes>
         ),
       },
       {
         path: "profile",
         element: (
           // <ProtectedRoutes>
-            <Profile />
+          <Profile />
           // </ProtectedRoutes>
         ),
       },
