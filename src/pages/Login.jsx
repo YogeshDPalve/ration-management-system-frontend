@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,11 @@ import {
 } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  const user = useSelector((store) => store.auth);
+  console.log(user);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     rationId: "",
@@ -81,6 +84,7 @@ const Login = () => {
                       <Button
                         onClick={() => navigate("/forgot-password/send-otp")}
                         variant="link"
+                        type="button"
                         className="ml-auto text-sm underline-offset-2 hover:underline"
                       >
                         Forgot your password?
@@ -163,10 +167,6 @@ const Login = () => {
               </div>
             </CardContent>
           </Card>
-          <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-            By clicking continue, you agree to our{" "}
-            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-          </div>
         </div>
       </div>
     </div>

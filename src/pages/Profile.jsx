@@ -36,6 +36,8 @@ import {
   Users,
 } from "lucide-react";
 import React from "react";
+import { useGetUserQuery } from "@/features/api/authApi";
+import { Skeleton } from "@/components/ui/skeleton";
 const user = {
   rationId: "123456",
   adharcardNumber: "123456789012",
@@ -150,77 +152,92 @@ const family = [
 ];
 
 const Profile = () => {
+  const { data, isLoading } = useGetUserQuery();
+  // const isLoading = true;
+
+  const userData = data?.userInfo;
+  // console.log(userData);
   return (
     <>
       <PageTitle title={"Profile"} />
 
-      <div className="m-10 text-primary">
+      <div className="md:m-10 my-10 mx-3 md:mx-5 text-primary">
         {/* page Title */}
         <div className="flex gap-4 text-primary items-center">
           <CircleUserRound size={30} />
           <h1 className=" text-3xl font-semibold font-winky ">Profile</h1>
         </div>
         {/* Basic information  */}
-        <div className="grid lg:grid-cols-2 gap-5 grid-cols-1">
-          <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
-            <div className="flex items-center gap-5 ">
-              <LibraryBig className="text-muted-foreground" size={20} />
-              <h2 className="font-bold text-2xl">Account Information</h2>
-            </div>
-            <p className="text-muted-foreground text-md">
-              Basic information about your account
-            </p>
-            <Separator className="mt-5 mb-2 " />
-            <div className="font-inter">
-              <div className="p-2">
-                <div className=" flex items-center justify-between">
-                  <h4 className="text-md font-semibold">Name</h4>
-                  <p className="text-sm">
-                    {user.firstName} {user.lastName}
-                  </p>
+        <div className="grid lg:grid-cols-2 gap-5 grid-cols-1 ">
+          {isLoading ? (
+            <>
+              <AccountInfoSkeleton />
+            </>
+          ) : (
+            <>
+              <div className="border mt-5 sm:p-5 p-3 bg-[#111113] tracking-tight rounded-sm sm:w-auto ">
+                <div className="flex items-center gap-5 ">
+                  <LibraryBig className="text-muted-foreground" size={20} />
+                  <h2 className="font-bold text-2xl">Account Information</h2>
+                </div>
+                <p className="text-muted-foreground text-md">
+                  Basic information about your account
+                </p>
+                <Separator className="mt-5 mb-2 " />
+                <div className="font-inter">
+                  <div className="p-2">
+                    <div className=" flex items-center justify-between">
+                      <h4 className="text-md font-semibold">Name</h4>
+                      <p className="text-sm">
+                        {userData.firstName} {userData.lastName}
+                      </p>
+                    </div>
+                  </div>
+                  <Separator className="my-2 " />
+                  <div className="p-2">
+                    <div className=" flex items-center justify-between">
+                      <h4 className="text-md font-semibold">
+                        Adhar Card Number
+                      </h4>
+                      <p className="text-sm">{userData.adharcardNumber} </p>
+                    </div>
+                  </div>
+                  <Separator className="my-2 " />
+                  <div className="p-2">
+                    <div className=" flex items-center justify-between">
+                      <h4 className="text-md font-semibold">Ration Id</h4>
+                      <p className="text-sm">{userData.rationId} </p>
+                    </div>
+                  </div>
+                  <Separator className="my-2 " />
+                  <div className="p-2">
+                    <div className=" flex items-center justify-between">
+                      <h4 className="text-md font-semibold">Mobile Number</h4>
+                      <p className="text-sm">{userData.mobileNo} </p>
+                    </div>
+                  </div>
+                  <Separator className="my-2 " />
+                  <div className="p-2">
+                    <div className=" flex items-center justify-between">
+                      <h4 className="text-md font-semibold">Email</h4>
+                      <p className="text-sm">{userData.email} </p>
+                    </div>
+                  </div>
+                  <Separator className="my-2" />
+                  <div className="p-2">
+                    <div className=" flex items-center justify-between">
+                      <h4 className="text-md font-semibold">
+                        Fair Price Shop Nubmer
+                      </h4>
+                      <p className="text-sm">{userData.fairPriceShopNumber} </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <Separator className="my-2 " />
-              <div className="p-2">
-                <div className=" flex items-center justify-between">
-                  <h4 className="text-md font-semibold">Adhar Card Number</h4>
-                  <p className="text-sm">{user.adharcardNumber} </p>
-                </div>
-              </div>
-              <Separator className="my-2 " />
-              <div className="p-2">
-                <div className=" flex items-center justify-between">
-                  <h4 className="text-md font-semibold">Ration Id</h4>
-                  <p className="text-sm">{user.rationId} </p>
-                </div>
-              </div>
-              <Separator className="my-2 " />
-              <div className="p-2">
-                <div className=" flex items-center justify-between">
-                  <h4 className="text-md font-semibold">Mobile Number</h4>
-                  <p className="text-sm">{user.mobileNo} </p>
-                </div>
-              </div>
-              <Separator className="my-2 " />
-              <div className="p-2">
-                <div className=" flex items-center justify-between">
-                  <h4 className="text-md font-semibold">Email</h4>
-                  <p className="text-sm">{user.email} </p>
-                </div>
-              </div>
-              <Separator className="my-2 " />
-              <div className="p-2">
-                <div className=" flex items-center justify-between">
-                  <h4 className="text-md font-semibold">
-                    Fair Price Shop Nubmer
-                  </h4>
-                  <p className="text-sm">{user.fairPriceShopNumber} </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
           {/* Billing */}
-          <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
+          <div className="border mt-5 sm:p-5 p-3 bg-[#111113] tracking-tight rounded-sm">
             <div className="flex items-center gap-5 ">
               <ReceiptIndianRupee className="text-muted-foreground" size={20} />
               <h2 className="font-bold text-2xl">Billing</h2>
@@ -229,7 +246,7 @@ const Profile = () => {
               Billing history about your account
             </p>
             <Separator className="mt-5 mb-2 " />
-            <CardContent className='mt-10 px-0'>
+            <CardContent className="mt-10 px-0">
               <ChartContainer config={chartConfig}>
                 <AreaChart
                   accessibilityLayer
@@ -267,7 +284,7 @@ const Profile = () => {
           </div>
         </div>
         {/* Family Members */}
-        <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm  ">
+        <div className="border mt-5 p-5 bg-[#111113] tracking-tight rounded-sm">
           <div className="flex items-center gap-5 ">
             <Users className="text-muted-foreground " size={20} />
             <h2 className="font-bold text-2xl">Family Members</h2>
@@ -283,7 +300,7 @@ const Profile = () => {
                   <TableHead>Name</TableHead>
                   <TableHead>Age</TableHead>
                   <TableHead className="text-center">Gender</TableHead>
-                  <TableHead className="text-center">
+                  <TableHead className="text-center hidden md:block">
                     AdharCard Number
                   </TableHead>
                   <TableHead>Relation</TableHead>
@@ -295,9 +312,9 @@ const Profile = () => {
                     <TableCell>{member.fullName}</TableCell>
                     <TableCell>{member.age}</TableCell>
                     <TableCell className="text-center">
-                      {member.gender}{" "}
+                      {member.gender}
                     </TableCell>
-                    <TableCell className="text-center">
+                    <TableCell className="text-center  hidden md:block">
                       {member.adharCard}
                     </TableCell>
                     <TableCell>{member.relation}</TableCell>
@@ -313,3 +330,34 @@ const Profile = () => {
 };
 
 export default Profile;
+
+export const AccountInfoSkeleton = () => {
+  return (
+    <>
+      <div className="border mt-5 sm:p-5 p-3 bg-[#111113] tracking-tight rounded-sm sm:w-auto">
+        <div className="flex items-center gap-5">
+          <LibraryBig className="text-muted-foreground" size={20} />
+          <h2 className="font-bold text-2xl">Account Information</h2>
+        </div>
+        <p className="text-muted-foreground text-md">
+          Basic information about your account
+        </p>
+        <Separator className="mt-5 mb-2" />
+
+        <div className="font-inter space-y-4">
+          {[...Array(6)].map((_, index) => (
+            <div key={index}>
+              <div className="p-2">
+                <div className="flex items-center justify-between">
+                  <Skeleton className="h-4 w-36" />
+                  <Skeleton className="h-4 w-40" />
+                </div>
+              </div>
+              {index !== 5 && <Separator className="my-2" />}
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
