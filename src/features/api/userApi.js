@@ -1,5 +1,5 @@
 import { BASE_API } from "@/constants/constants";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const USER_API = `${BASE_API}/api/v1/report`;
 
@@ -10,7 +10,7 @@ export const userApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    sendComplant: builder.mutation({
+    sendComplaint: builder.mutation({
       query: (inputData) => ({
         url: "/complaint",
         method: "POST",
@@ -20,4 +20,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useSendComplantMutation } = userApi;
+export const { useSendComplaintMutation } = userApi;

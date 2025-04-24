@@ -1,5 +1,5 @@
 import PageTitle from "@/components/PageTitle";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,13 +27,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useSendComplaintMutation } from "@/features/api/userApi";
+import { toast } from "sonner";
 
 const ratring = [
-  { id: 1, emoji: "😤", emotion: "WORSE" },
-  { id: 2, emoji: "🙁", emotion: "BAD" },
-  { id: 3, emoji: "🙂", emotion: "OK" },
-  { id: 4, emoji: "☺️", emotion: "GOOD" },
-  { id: 5, emoji: "😍", emotion: "EXCELLENT" },
+  { id: "WORSE", emoji: "😤", emotion: "WORSE" },
+  { id: "BAD", emoji: "🙁", emotion: "BAD" },
+  { id: "OK", emoji: "🙂", emotion: "OK" },
+  { id: "GOOD", emoji: "☺️", emotion: "GOOD" },
+  { id: "EXCELLENT", emoji: "😍", emotion: "EXCELLENT" },
 ];
 
 const Complaint = () => {
@@ -41,9 +43,13 @@ const Complaint = () => {
   const [emojis, setEmojis] = useState(null);
   const handleRatingClicked = (emoji) => {
     setEmojis(emoji);
+    console.log(emoji);
   };
 
   // formData state to submit complaint data
+  const [sendComplaint, { isLoading: isComplaintLoading }] =
+    useSendComplaintMutation();
+  const isLoading = true;
   const [formData, setFormData] = useState({
     userName: "",
     rationId: "",
@@ -81,12 +87,45 @@ const Complaint = () => {
     }));
   };
   // handle sumbit complaint
-  const handleComplaint = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const handleComplaint = async (e) => {
+    try {
+      e.preventDefault();
+
+      const form = new FormData();
+      form.append("userName", formData.userName);
+      form.append("rationId", formData.rationId);
+      form.append("shopNumber", formData.shopNumber);
+      form.append("shopOwnerName", formData.shopOwnerName);
+      form.append("shopAddress", formData.shopAddress);
+      form.append("issueType", formData.issueType);
+      form.append("description", formData.description);
+
+      // Append all selected proof files
+      formData.proof.forEach((file) => {
+        form.append("proof", file);
+      });
+
+      // console.log(complaintData);
+      const complaintData = await sendComplaint(form).unwrap();
+      toast.success(complaintData?.message || "Complaint send successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error?.data?.message ||
+          error?.data?.errors[0]?.msg ||
+          "Unable to send complaint"
+      );
+    }
   };
+
   const handleFeedback = (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
+
+      // console.log(complaintData);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -206,7 +245,15 @@ const Complaint = () => {
                       placeholder="Provide detailed information about your complaint"
                     />
                   </div>
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" disabled={isComplaintLoading}>
+                    {isComplaintLoading ? (
+                      <>
+                        <Loader2 className="animate-spin" /> Please wait
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
                 </CardContent>
               </form>
             </Card>
@@ -226,9 +273,7 @@ const Complaint = () => {
                           <Tooltip>
                             <TooltipTrigger className="">
                               <Button
-                                onClick={() =>
-                                  handleRatingClicked(emoji.emotion)
-                                }
+                                onClick={() => handleRatingClicked(emoji.id)}
                                 className={`flex items-center lg:mx-4 justify-center rounded-full opacity-50 md:text-4xl sm:mx-1 text-4xl h-15 w-15 sm:h-14 sm:w-14 bg-transparent hover:opacity-100 hover:bg-transparent hover:scale-140 ${
                                   emojis === emoji.id
                                     ? "opacity-100 scale-150"
@@ -254,7 +299,15 @@ const Complaint = () => {
                   />
 
                   <Textarea type="text" name="message" placeholder="Message" />
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="animate-spin  " /> Please wait
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
                 </CardContent>
               </form>
             </Card>
