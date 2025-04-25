@@ -15,24 +15,24 @@ import Profile from "./pages/Profile";
 import { ThemeProvider } from "./components/theme-provider";
 import HomePage from "./pages/HomePage";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
-
-// function App() {
-//   return (
-//     <>
-//       <BrowserRouter>
-//         <Routes>
-//           <Route path="/" element={<MainLayout />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/login/otp-verification" element={<OtpLogin />} />
-//           <Route path="/register" element={<Register />} />
-//           <Route path="/reset-password" element={<ForgotPassowrd />} />
-//           <Route path="/send-otp" element={<SendOtp />} />
-//         </Routes>
-//       </BrowserRouter>
-//     </>
-//   );
-// }
-
+{
+  // function App() {
+  //   return (
+  //     <>
+  //       <BrowserRouter>
+  //         <Routes>
+  //           <Route path="/" element={<MainLayout />} />
+  //           <Route path="/login" element={<Login />} />
+  //           <Route path="/login/otp-verification" element={<OtpLogin />} />
+  //           <Route path="/register" element={<Register />} />
+  //           <Route path="/reset-password" element={<ForgotPassowrd />} />
+  //           <Route path="/send-otp" element={<SendOtp />} />
+  //         </Routes>
+  //       </BrowserRouter>
+  //     </>
+  //   );
+  // }
+}
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -89,17 +89,17 @@ const appRouter = createBrowserRouter([
       {
         path: "complaint",
         element: (
-          // <ProtectedRoutes>
-          <Complaint />
-          // </ProtectedRoutes>
+          <ProtectedRoutes>
+            <Complaint />/
+          </ProtectedRoutes>
         ),
       },
       {
         path: "profile",
         element: (
-          // <ProtectedRoutes>
-          <Profile />
-          // </ProtectedRoutes>
+          <ProtectedRoutes>
+            <Profile />
+          </ProtectedRoutes>
         ),
       },
 

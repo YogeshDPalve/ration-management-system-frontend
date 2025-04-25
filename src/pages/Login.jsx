@@ -14,8 +14,6 @@ import { toast } from "sonner";
 import { useSelector } from "react-redux";
 
 const Login = () => {
-  const user = useSelector((store) => store.auth);
-  console.log(user);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     rationId: "",
