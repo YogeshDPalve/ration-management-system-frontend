@@ -4,15 +4,18 @@ import "./index.css";
 import App from "./App.jsx";
 import { ThemeProvider } from "./components/theme-provider";
 import { Provider } from "react-redux";
-import { appStore } from "./app/store";
+import { appStore, persistor } from "./app/store";
 import { Toaster } from "./components/ui/sonner";
+import { PersistGate } from "redux-persist/integration/react";
 
 createRoot(document.getElementById("root")).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
     <StrictMode>
       <Provider store={appStore}>
-        <App />
-        <Toaster />
+        <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+          <App />
+          <Toaster />
+        </PersistGate>
       </Provider>
     </StrictMode>
   </ThemeProvider>

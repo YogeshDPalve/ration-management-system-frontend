@@ -123,6 +123,16 @@ const Complaint = () => {
       // console.log(complaintData);
       const complaintData = await sendComplaint(form).unwrap();
       toast.success(complaintData?.message || "Complaint send successfully");
+      setFormData({
+        userName: "",
+        rationId: "",
+        shopNumber: "",
+        shopOwnerName: "",
+        shopAddress: "",
+        proof: [],
+        issueType: "",
+        description: "",
+      });
     } catch (error) {
       console.log(error);
       toast.error(
@@ -157,6 +167,12 @@ const Complaint = () => {
       // console.log(feedbackFormData);
       const feedback = await sendFeedback(feedbackFormData).unwrap();
       toast.success(feedback?.message || "Feedback send successfully");
+      // reset form after submission
+      setFeedbackData({
+        shopNumber: "",
+        message: "",
+      });
+      setEmojis(null);
     } catch (error) {
       console.log(error);
       toast.error(
@@ -204,6 +220,7 @@ const Complaint = () => {
                     <Input
                       name="rationId"
                       type="number"
+                      value={formData.rationId}
                       onChange={handleChange}
                       required
                     />
@@ -213,7 +230,9 @@ const Complaint = () => {
                     <Input
                       name="shopNumber"
                       type="number"
+                      min={0}
                       required
+                      value={formData.shopNumber}
                       onChange={handleChange}
                     />
                   </div>
@@ -221,6 +240,7 @@ const Complaint = () => {
                     <Label htmlFor="text">Name of Shop Owner</Label>
                     <Input
                       name="shopOwnerName"
+                      value={formData.shopOwnerName}
                       onChange={handleChange}
                       required
                     />
@@ -229,6 +249,7 @@ const Complaint = () => {
                     <Label htmlFor="name">Address of shop</Label>
                     <Input
                       name="shopAddress"
+                      value={formData.shopAddress}
                       onChange={handleChange}
                       required
                     />
@@ -249,7 +270,7 @@ const Complaint = () => {
                     />
                   </div>
                   <div className="flex gap-3">
-                    {formData.proof.map((file) => (
+                    {formData?.proof?.map((file) => (
                       <img
                         key={file.name}
                         src={URL.createObjectURL(file)}
@@ -260,7 +281,11 @@ const Complaint = () => {
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="file">Complaint about</Label>
-                    <Select onValueChange={handleSelectChange} required>
+                    <Select
+                      onValueChange={handleSelectChange}
+                      value={formData.issueType}
+                      required
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Issue Type" />
                       </SelectTrigger>
@@ -279,6 +304,7 @@ const Complaint = () => {
                   <div className="space-y-1">
                     <Label htmlFor="name">Description</Label>
                     <Textarea
+                      value={formData.description}
                       onChange={handleChange}
                       name="description"
                       placeholder="Provide detailed information about your complaint"
@@ -339,6 +365,7 @@ const Complaint = () => {
                     name="shopNumber"
                     type="number"
                     placeholder="Fair Price Shop Number"
+                    value={feedbackData.shopNumber}
                     onChange={handleChange}
                   />
 
@@ -346,6 +373,7 @@ const Complaint = () => {
                     type="text"
                     name="message"
                     placeholder="Message"
+                    value={feedbackData.message}
                     onChange={handleChange}
                   />
                   <Button type="submit" disabled={isLoading}>
