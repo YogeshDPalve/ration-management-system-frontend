@@ -14,6 +14,7 @@ import {
   CalendarClockIcon,
   CircleAlert,
   EllipsisVertical,
+  Loader2,
   Menu,
   MessageSquareMore,
   PanelsTopLeft,
@@ -38,7 +39,21 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, NavLink } from "react-router-dom";
 import "../index.css";
+import { useLazyLogoutQuery } from "@/features/api/authApi";
+import { toast } from "sonner";
 const Sidebar = () => {
+  const [trigger, { isLoading, error }] = useLazyLogoutQuery();
+  const handleLogout = () => {
+    try {
+      trigger();
+      if (error) {
+        toast.error("Something went wrong! Logout unsuccessful")
+        console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  };
   return (
     <>
       <div className="hidden md:block border-r-1 bg-[#111113] p-2  w-60 text-primary fixed top-0 left-0 h-screen z-50 ">
@@ -204,14 +219,16 @@ const Sidebar = () => {
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuItem disabled>API</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <Link to="/">
-                  <DropdownMenuItem className="text-red-300 ">
-                    Log out
-                    <DropdownMenuShortcut className="text-red-300 ">
-                      ⇧⌘Q
-                    </DropdownMenuShortcut>
-                  </DropdownMenuItem>
-                </Link>
+
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="text-red-300 "
+                >
+                  Log out
+                  <DropdownMenuShortcut className="text-red-300 ">
+                    ⇧⌘Q
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -244,7 +261,6 @@ const Sidebar = () => {
               </SheetTitle>
               <SheetDescription>
                 <div className="border-r-1 bg-[#111113] p-2   text-primary   ">
-                  
                   <div>
                     <Button
                       variant="outline"
@@ -398,7 +414,14 @@ const Sidebar = () => {
                           <DropdownMenuSeparator />
                           <Link to="/">
                             <DropdownMenuItem className="text-red-300 ">
-                              Log out
+                              {isLoading ? (
+                                <>
+                                  Logging Out
+                                  <Loader2 className="animate-spin" />
+                                </>
+                              ) : (
+                                "LogOut"
+                              )}
                               <DropdownMenuShortcut className="text-red-300 ">
                                 ⇧⌘Q
                               </DropdownMenuShortcut>
