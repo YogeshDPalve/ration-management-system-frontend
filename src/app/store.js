@@ -4,6 +4,7 @@ import { authApi } from "@/features/api/authApi";
 import { userApi } from "@/features/api/userApi";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage
+import { adminApi } from "@/features/api/adminApi";
 
 const persistConfig = {
   key: "root",
@@ -18,7 +19,7 @@ export const appStore = configureStore({
   middleware: (defaultMiddleware) =>
     defaultMiddleware({
       serializableCheck: false, // to prevent warning from redux-persist
-    }).concat(authApi.middleware, userApi.middleware),
+    }).concat(authApi.middleware, userApi.middleware, adminApi.middleware),
 });
 
 export const persistor = persistStore(appStore);

@@ -41,3 +41,5 @@ export const adminApi = createApi({
     }),
   }),
 });
+
+export const { useLoginAdminMutation } = adminApi;
