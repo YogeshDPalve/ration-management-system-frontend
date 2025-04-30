@@ -1,19 +1,19 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ForgotPassowrd from "./pages/ForgotPassowrd";
-import OtpLogin from "./pages/OtpLogin";
-import Dashboard from "./pages/Dashboard";
-import SendOtp from "./pages/SendOtp";
+import Login from "./pages/user/Login";
+import Register from "./pages/user/Register";
+import ForgotPassowrd from "./pages/user/ForgotPassowrd";
+import OtpLogin from "./pages/user/OtpLogin";
+import Dashboard from "./pages/user/Dashboard";
+import SendOtp from "./pages/user/SendOtp";
 import "./index.css";
 import MainLayout from "./layout/MainLayout";
-import Notifications from "./pages/Notifications";
-import History from "./pages/History";
-import Complaint from "./pages/Complaint";
-import Profile from "./pages/Profile";
+import Notifications from "./pages/user/Notifications";
+import History from "./pages/user/History";
+import Complaint from "./pages/user/Complaint";
+import Profile from "./pages/user/Profile";
 import { ThemeProvider } from "./components/theme-provider";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/user/HomePage";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
 {
   // function App() {
