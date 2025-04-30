@@ -14,7 +14,8 @@ import Complaint from "./pages/user/Complaint";
 import Profile from "./pages/user/Profile";
 import { ThemeProvider } from "./components/theme-provider";
 import HomePage from "./pages/user/HomePage";
-import { ProtectedRoutes } from "./components/ProtectedRoutes";
+import { AdminRoute, ProtectedRoutes } from "./components/ProtectedRoutes";
+import AdminLogin from "./pages/admin/adminLogin";
 {
   // function App() {
   //   return (
@@ -104,41 +105,16 @@ const appRouter = createBrowserRouter([
       },
 
       //       //* Admin Routes strar from here
+
       {
-        // {
-        //   path: "admin",
-        //   element: (
-        //     <AdminRoute>
-        //       <Sidebar />
-        //     </AdminRoute>
-        //   ),
-        //   children: [
-        //     {
-        //       path: "dashboard",
-        //       element: <Dashboard />,
-        //     },
-        //     {
-        //       path: "course",
-        //       element: <CourseTable />,
-        //     },
-        //     {
-        //       path: "course/create",
-        //       element: <AddCourse />,
-        //     },
-        //     {
-        //       path: "course/:courseId",
-        //       element: <EditCourse />,
-        //     },
-        //     {
-        //       path: "course/:courseId/lecture",
-        //       element: <CreateLecture />,
-        //     },
-        //     {
-        //       path: "course/:courseId/lecture/:lectureId",
-        //       element: <EditLecture />,
-        //     },
-        //   ],
-        // },
+        path: "admin",
+        element: <MainLayout />,
+        children: [
+          {
+            path: "login",
+            element: <AdminLogin />,
+          },
+        ],
       },
     ],
   },

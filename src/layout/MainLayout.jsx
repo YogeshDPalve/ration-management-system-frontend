@@ -14,6 +14,7 @@ const MainLayout = () => {
     "/reset-password",
     "/forgot-password/send-otp",
     "/login/otp-verification",
+    "/admin/login",
   ];
 
   const shouldHideSidebar = useMemo(

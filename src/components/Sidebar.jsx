@@ -41,19 +41,25 @@ import { Link, NavLink } from "react-router-dom";
 import "../index.css";
 import { useLazyLogoutQuery } from "@/features/api/authApi";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 const Sidebar = () => {
+  // import user logout api
   const [trigger, { isLoading, error }] = useLazyLogoutQuery();
+  // logout user function
   const handleLogout = () => {
     try {
       trigger();
       if (error) {
-        toast.error("Something went wrong! Logout unsuccessful")
-        console.log(error)
+        toast.error("Something went wrong! Logout unsuccessful");
+        console.log(error);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
+
+  const role = useSelector((store) => store.user.role);
+  console.log("ROLE: ", role);
   return (
     <>
       <div className="hidden md:block border-r-1 bg-[#111113] p-2  w-60 text-primary fixed top-0 left-0 h-screen z-50 ">

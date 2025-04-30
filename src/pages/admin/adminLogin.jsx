@@ -8,10 +8,11 @@ import PageTitle from "@/components/PageTitle";
 
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
+import { useLoginAdminMutation } from "@/features/api/adminApi";
 
-const adminLogin = () => {
+const AdminLogin = () => {
   const navigate = useNavigate();
+  const [loginAdmin, { isLoading }] = useLoginAdminMutation();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,15 +28,8 @@ const adminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const loginData = await loginUser(formData).unwrap(); // login successful
+      const loginData = await loginAdmin(formData).unwrap(); // login successful
       toast.success(loginData.message || "Login Successfully");
-
-      const otpData = await generateOtp({
-        rationId: formData.rationId,
-      }).unwrap(); // generate OTP
-      toast.success(otpData.message || "OTP sent successfully");
-
-      navigate("/login/otp-verification");
     } catch (err) {
       toast.error(
         err?.data?.message ||
@@ -64,9 +58,9 @@ const adminLogin = () => {
                   <div className="grid gap-2">
                     <Label htmlFor="email">Admin Email Id</Label>
                     <Input
-                      name="rationId"
+                      name="email"
                       type="text"
-                      placeholder="123456"
+                      placeholder="admin@email"
                       required
                       onChange={handleChange}
                     />
@@ -165,4 +159,4 @@ const adminLogin = () => {
   );
 };
 
-export default adminLogin;
+export default AdminLogin;

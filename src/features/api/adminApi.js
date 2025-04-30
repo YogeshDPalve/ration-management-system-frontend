@@ -20,7 +20,7 @@ export const adminApi = createApi({
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          dispatch(userLoggedIn({ user: result.data.adminInfo }));
+          dispatch(userLoggedIn({ user: result.data.data }));
         } catch (error) {
           console.log(error);
         }
