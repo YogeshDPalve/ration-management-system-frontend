@@ -1,5 +1,6 @@
 import { BASE_API } from "@/constants/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { userLoggedIn, userLoggedOut } from "../authSlice";
 
 const ADMIN_API = `${BASE_API}/api/v1/admin`;
 
@@ -16,6 +17,27 @@ export const adminApi = createApi({
         method: "POST",
         body: loginData,
       }),
+      async onQueryStarted(args, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(userLoggedIn({ user: result.data.adminInfo }));
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
+    logout: builder.query({
+      query: () => ({
+        url: "/logout",
+        method: "GET",
+      }),
+      async onQueryStarted(args, { queryFulfilled, dispatch }) {
+        try {
+          dispatch(userLoggedOut());
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });
