@@ -40,7 +40,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, NavLink } from "react-router-dom";
 import "../index.css";
 import { useLazyLogoutQuery } from "@/features/api/authApi";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
 const Sidebar = () => {
   // import user logout api
   const [trigger, { isLoading, error }] = useLazyLogoutQuery();
@@ -56,6 +57,7 @@ const Sidebar = () => {
       console.log(error);
     }
   };
+  // check role
 
   return (
     <>
@@ -193,10 +195,6 @@ const Sidebar = () => {
                       Settings
                       <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Keyboard shortcuts
-                      <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                    </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
@@ -221,7 +219,6 @@ const Sidebar = () => {
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Support</DropdownMenuItem>
-                  <DropdownMenuItem disabled>API</DropdownMenuItem>
                   <DropdownMenuSeparator />
 
                   <DropdownMenuItem

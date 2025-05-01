@@ -14,8 +14,15 @@ import Complaint from "./pages/user/Complaint";
 import Profile from "./pages/user/Profile";
 import { ThemeProvider } from "./components/theme-provider";
 import HomePage from "./pages/user/HomePage";
-import { AdminRoute, ProtectedRoutes } from "./components/ProtectedRoutes";
+import {
+  AdminRoute,
+  AuthenticatedAdmin,
+  ProtectedRoutes,
+} from "./components/ProtectedRoutes";
 import AdminLogin from "./pages/admin/adminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import NotFoundPage from "./components/NotFoundPage";
+import AdminSidebar from "./components/AdminSidebar";
 {
   // function App() {
   //   return (
@@ -103,18 +110,38 @@ const appRouter = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      {
+        path: "admin/login",
+        element: (
+          <AuthenticatedAdmin>
+            <AdminLogin />
+          </AuthenticatedAdmin>
+        ),
+      },
 
       //       //* Admin Routes strar from here
 
       {
         path: "admin",
-        element: <MainLayout />,
+        element: (
+          <AdminRoute>
+            <AdminSidebar />
+          </AdminRoute>
+        ),
         children: [
           {
-            path: "login",
-            element: <AdminLogin />,
+            path: "*",
+            element: <NotFoundPage />,
+          },
+          {
+            path: "dashboard",
+            element: <AdminDashboard />,
           },
         ],
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },

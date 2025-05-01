@@ -30,6 +30,7 @@ const AdminLogin = () => {
     try {
       const loginData = await loginAdmin(formData).unwrap(); // login successful
       toast.success(loginData.message || "Login Successfully");
+      navigate("/admin/dashboard");
     } catch (err) {
       toast.error(
         err?.data?.message ||
