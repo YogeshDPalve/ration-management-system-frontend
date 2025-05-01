@@ -5,20 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "@/components/PageTitle";
-import {
-  useGenerateLoginOtpMutation,
-  useLoginUserMutation,
-} from "@/features/api/authApi";
+
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
+import { useLoginAdminMutation } from "@/features/api/adminApi";
 
-const Login = () => {
-  const user = useSelector((store) => store.auth);
-  console.log(user);
+const AdminLogin = () => {
   const navigate = useNavigate();
+  const [loginAdmin, { isLoading }] = useLoginAdminMutation();
   const [formData, setFormData] = useState({
-    rationId: "",
+    email: "",
     password: "",
   });
   const handleChange = (e) => {
@@ -28,20 +24,13 @@ const Login = () => {
       [name]: value,
     }));
   };
-  const [loginUser, { isLoading }] = useLoginUserMutation();
-  const [generateOtp] = useGenerateLoginOtpMutation();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const loginData = await loginUser(formData).unwrap(); // login successful
+      const loginData = await loginAdmin(formData).unwrap(); // login successful
       toast.success(loginData.message || "Login Successfully");
-
-      const otpData = await generateOtp({
-        rationId: formData.rationId,
-      }).unwrap(); // generate OTP
-      toast.success(otpData.message || "OTP sent successfully");
-
-      navigate("/login/otp-verification");
+      navigate("/admin/dashboard");
     } catch (err) {
       toast.error(
         err?.data?.message ||
@@ -54,7 +43,7 @@ const Login = () => {
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
-      <PageTitle title={"Login"} />
+      <PageTitle title={"Admin Login"} />
       <div className="w-full max-w-sm md:max-w-3xl">
         <div className="flex flex-col gap-6">
           <Card className="overflow-hidden dark:bg-background">
@@ -68,11 +57,11 @@ const Login = () => {
                     </p>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Ration Id</Label>
+                    <Label htmlFor="email">Admin Email Id</Label>
                     <Input
-                      name="rationId"
+                      name="email"
                       type="text"
-                      placeholder="123456"
+                      placeholder="admin@email"
                       required
                       onChange={handleChange}
                     />
@@ -82,7 +71,6 @@ const Login = () => {
                       <Label htmlFor="password">Password</Label>
 
                       <Button
-                        onClick={() => navigate("/forgot-password/send-otp")}
                         variant="link"
                         type="button"
                         className="ml-auto text-sm underline-offset-2 hover:underline"
@@ -97,11 +85,10 @@ const Login = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full">
                     {isLoading ? (
                       <>
-                        <Loader2 className="animate-spin w-4 h-4 " /> Please
-                        Wait
+                        <Loader2 className="animate-spin w-4 h-4 " />
                       </>
                     ) : (
                       "Login"
@@ -173,4 +160,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

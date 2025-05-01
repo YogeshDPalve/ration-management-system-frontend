@@ -1,38 +1,47 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ForgotPassowrd from "./pages/ForgotPassowrd";
-import OtpLogin from "./pages/OtpLogin";
-import Dashboard from "./pages/Dashboard";
-import SendOtp from "./pages/SendOtp";
+import Login from "./pages/user/Login";
+import Register from "./pages/user/Register";
+import ForgotPassowrd from "./pages/user/ForgotPassowrd";
+import OtpLogin from "./pages/user/OtpLogin";
+import Dashboard from "./pages/user/Dashboard";
+import SendOtp from "./pages/user/SendOtp";
 import "./index.css";
 import MainLayout from "./layout/MainLayout";
-import Notifications from "./pages/Notifications";
-import History from "./pages/History";
-import Complaint from "./pages/Complaint";
-import Profile from "./pages/Profile";
+import Notifications from "./pages/user/Notifications";
+import History from "./pages/user/History";
+import Complaint from "./pages/user/Complaint";
+import Profile from "./pages/user/Profile";
 import { ThemeProvider } from "./components/theme-provider";
-import HomePage from "./pages/HomePage";
-import { ProtectedRoutes } from "./components/ProtectedRoutes";
-
-// function App() {
-//   return (
-//     <>
-//       <BrowserRouter>
-//         <Routes>
-//           <Route path="/" element={<MainLayout />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/login/otp-verification" element={<OtpLogin />} />
-//           <Route path="/register" element={<Register />} />
-//           <Route path="/reset-password" element={<ForgotPassowrd />} />
-//           <Route path="/send-otp" element={<SendOtp />} />
-//         </Routes>
-//       </BrowserRouter>
-//     </>
-//   );
-// }
-
+import HomePage from "./pages/user/HomePage";
+import {
+  AdminRoute,
+  AuthenticatedAdmin,
+  AuthenticatedUser,
+  ProtectedRoutes,
+} from "./components/ProtectedRoutes";
+import AdminLogin from "./pages/admin/adminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import NotFoundPage from "./components/NotFoundPage";
+import AdminSidebar from "./components/AdminSidebar";
+{
+  // function App() {
+  //   return (
+  //     <>
+  //       <BrowserRouter>
+  //         <Routes>
+  //           <Route path="/" element={<MainLayout />} />
+  //           <Route path="/login" element={<Login />} />
+  //           <Route path="/login/otp-verification" element={<OtpLogin />} />
+  //           <Route path="/register" element={<Register />} />
+  //           <Route path="/reset-password" element={<ForgotPassowrd />} />
+  //           <Route path="/send-otp" element={<SendOtp />} />
+  //         </Routes>
+  //       </BrowserRouter>
+  //     </>
+  //   );
+  // }
+}
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -44,7 +53,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <AuthenticatedUser>
+            <Login />
+          </AuthenticatedUser>
+        ),
       },
       {
         path: "login/otp-verification",
@@ -89,56 +102,51 @@ const appRouter = createBrowserRouter([
       {
         path: "complaint",
         element: (
-          // <ProtectedRoutes>
-          <Complaint />
-          // </ProtectedRoutes>
+          <ProtectedRoutes>
+            <Complaint />/
+          </ProtectedRoutes>
         ),
       },
       {
         path: "profile",
         element: (
-          // <ProtectedRoutes>
-          <Profile />
-          // </ProtectedRoutes>
+          <ProtectedRoutes>
+            <Profile />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "admin/login",
+        element: (
+          <AuthenticatedAdmin>
+            <AdminLogin />
+          </AuthenticatedAdmin>
         ),
       },
 
       //       //* Admin Routes strar from here
+
       {
-        // {
-        //   path: "admin",
-        //   element: (
-        //     <AdminRoute>
-        //       <Sidebar />
-        //     </AdminRoute>
-        //   ),
-        //   children: [
-        //     {
-        //       path: "dashboard",
-        //       element: <Dashboard />,
-        //     },
-        //     {
-        //       path: "course",
-        //       element: <CourseTable />,
-        //     },
-        //     {
-        //       path: "course/create",
-        //       element: <AddCourse />,
-        //     },
-        //     {
-        //       path: "course/:courseId",
-        //       element: <EditCourse />,
-        //     },
-        //     {
-        //       path: "course/:courseId/lecture",
-        //       element: <CreateLecture />,
-        //     },
-        //     {
-        //       path: "course/:courseId/lecture/:lectureId",
-        //       element: <EditLecture />,
-        //     },
-        //   ],
-        // },
+        path: "admin",
+        element: (
+          <AdminRoute>
+            <AdminSidebar />
+          </AdminRoute>
+        ),
+        children: [
+          {
+            path: "*",
+            element: <NotFoundPage />,
+          },
+          {
+            path: "dashboard",
+            element: <AdminDashboard />,
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userLoggedIn } from "../authSlice";
+import { userLoggedIn, userLoggedOut } from "../authSlice";
 import { BASE_API } from "@/constants/constants";
 
 const USER_API = `${BASE_API}/api/v1/user`;
@@ -67,6 +67,19 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+    logout: builder.query({
+      query: () => ({
+        url: "/logout",
+        method: "GET",
+      }),
+      async onQueryStarted(args, { queryFulfilled, dispatch }) {
+        try {
+          dispatch(userLoggedOut());
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
   }),
 });
 export const {
@@ -77,4 +90,5 @@ export const {
   useVerifyOtpMutation,
   useResetPasswordMutation,
   useGetUserQuery,
+  useLazyLogoutQuery,
 } = authApi;

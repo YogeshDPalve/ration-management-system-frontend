@@ -17,7 +17,14 @@ export const userApi = createApi({
         body: inputData,
       }),
     }),
+    sendFeedback: builder.mutation({
+      query: (inputData) => ({
+        url: "/feedback",
+        method: "POST",
+        body: inputData,
+      }),
+    }),
   }),
 });
 
-export const { useSendComplaintMutation } = userApi;
+export const { useSendComplaintMutation, useSendFeedbackMutation } = userApi;

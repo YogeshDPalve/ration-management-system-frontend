@@ -27,29 +27,39 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { useSendComplaintMutation } from "@/features/api/userApi";
+import {
+  useSendComplaintMutation,
+  useSendFeedbackMutation,
+} from "@/features/api/userApi";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const ratring = [
-  { id: "WORSE", emoji: "😤", emotion: "WORSE" },
-  { id: "BAD", emoji: "🙁", emotion: "BAD" },
-  { id: "OK", emoji: "🙂", emotion: "OK" },
-  { id: "GOOD", emoji: "☺️", emotion: "GOOD" },
-  { id: "EXCELLENT", emoji: "😍", emotion: "EXCELLENT" },
+  { id: "WORSE", emoji: "😤" },
+  { id: "BAD", emoji: "🙁" },
+  { id: "OK", emoji: "🙂" },
+  { id: "GOOD", emoji: "☺️" },
+  { id: "EXCELLENT", emoji: "😍" },
 ];
 
 const Complaint = () => {
+  const { rationId } = useSelector((store) => store.auth.user);
   // select emojies for feedback
   const [emojis, setEmojis] = useState(null);
-  const handleRatingClicked = (emoji) => {
+  const [feedbackData, setFeedbackData] = useState({
+    shopNumber: "",
+    message: "",
+  });
+  const handleRatingClicked = (emoji, e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setEmojis(emoji);
-    console.log(emoji);
   };
 
   // formData state to submit complaint data
   const [sendComplaint, { isLoading: isComplaintLoading }] =
     useSendComplaintMutation();
-  const isLoading = true;
+  const [sendFeedback, { isLoading }] = useSendFeedbackMutation();
   const [formData, setFormData] = useState({
     userName: "",
     rationId: "",
@@ -81,11 +91,16 @@ const Complaint = () => {
   // handle change in state
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setFeedbackData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+
   // handle sumbit complaint
   const handleComplaint = async (e) => {
     try {
@@ -108,6 +123,16 @@ const Complaint = () => {
       // console.log(complaintData);
       const complaintData = await sendComplaint(form).unwrap();
       toast.success(complaintData?.message || "Complaint send successfully");
+      setFormData({
+        userName: "",
+        rationId: "",
+        shopNumber: "",
+        shopOwnerName: "",
+        shopAddress: "",
+        proof: [],
+        issueType: "",
+        description: "",
+      });
     } catch (error) {
       console.log(error);
       toast.error(
@@ -117,14 +142,44 @@ const Complaint = () => {
       );
     }
   };
-
-  const handleFeedback = (e) => {
+  {
+    // const handleFeedbackChange = (e) => {
+    //   const { name, value } = e.target;
+    //   setFeedbackData((prevState) => ({
+    //     ...prevState,
+    //     [name]: value,
+    //   }));
+    // };
+  }
+  // submitting feedback form
+  const handleFeedback = async (e) => {
     try {
       e.preventDefault();
-
-      // console.log(complaintData);
+      const feedbackFormData = {
+        rationId: rationId,
+        rating: emojis,
+        shopNumber:
+          feedbackData.shopNumber?.trim() === ""
+            ? null
+            : Number(feedbackData.shopNumber),
+        message: feedbackData.message,
+      };
+      // console.log(feedbackFormData);
+      const feedback = await sendFeedback(feedbackFormData).unwrap();
+      toast.success(feedback?.message || "Feedback send successfully");
+      // reset form after submission
+      setFeedbackData({
+        shopNumber: "",
+        message: "",
+      });
+      setEmojis(null);
     } catch (error) {
       console.log(error);
+      toast.error(
+        error?.data?.message ||
+          error?.data?.errors[0]?.msg ||
+          "Cannot send feedback"
+      );
     }
   };
   return (
@@ -165,6 +220,7 @@ const Complaint = () => {
                     <Input
                       name="rationId"
                       type="number"
+                      value={formData.rationId}
                       onChange={handleChange}
                       required
                     />
@@ -174,7 +230,9 @@ const Complaint = () => {
                     <Input
                       name="shopNumber"
                       type="number"
+                      min={0}
                       required
+                      value={formData.shopNumber}
                       onChange={handleChange}
                     />
                   </div>
@@ -182,6 +240,7 @@ const Complaint = () => {
                     <Label htmlFor="text">Name of Shop Owner</Label>
                     <Input
                       name="shopOwnerName"
+                      value={formData.shopOwnerName}
                       onChange={handleChange}
                       required
                     />
@@ -190,6 +249,7 @@ const Complaint = () => {
                     <Label htmlFor="name">Address of shop</Label>
                     <Input
                       name="shopAddress"
+                      value={formData.shopAddress}
                       onChange={handleChange}
                       required
                     />
@@ -210,7 +270,7 @@ const Complaint = () => {
                     />
                   </div>
                   <div className="flex gap-3">
-                    {formData.proof.map((file) => (
+                    {formData?.proof?.map((file) => (
                       <img
                         key={file.name}
                         src={URL.createObjectURL(file)}
@@ -221,7 +281,11 @@ const Complaint = () => {
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="file">Complaint about</Label>
-                    <Select onValueChange={handleSelectChange} required>
+                    <Select
+                      onValueChange={handleSelectChange}
+                      value={formData.issueType}
+                      required
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Issue Type" />
                       </SelectTrigger>
@@ -240,6 +304,7 @@ const Complaint = () => {
                   <div className="space-y-1">
                     <Label htmlFor="name">Description</Label>
                     <Textarea
+                      value={formData.description}
                       onChange={handleChange}
                       name="description"
                       placeholder="Provide detailed information about your complaint"
@@ -260,20 +325,24 @@ const Complaint = () => {
           </TabsContent>
           <TabsContent value="feedback" className="md:w-[100%] w-90 mx-auto">
             <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl">Feedback</CardTitle>
+                <CardDescription>Provide your feedback here.</CardDescription>
+              </CardHeader>
+
               <form onSubmit={handleFeedback}>
-                <CardHeader>
-                  <CardTitle className="text-2xl">Feedback</CardTitle>
-                  <CardDescription>Provide your feedback here.</CardDescription>
-                </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center-center justify-between overflow-auto h-18 md:h-20">
                     {ratring.map((emoji) => (
-                      <div className=" " key={emoji.id}>
+                      <div key={emoji.id}>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger className="">
                               <Button
-                                onClick={() => handleRatingClicked(emoji.id)}
+                                type="button"
+                                onClick={(e) =>
+                                  handleRatingClicked(emoji.id, e)
+                                }
                                 className={`flex items-center lg:mx-4 justify-center rounded-full opacity-50 md:text-4xl sm:mx-1 text-4xl h-15 w-15 sm:h-14 sm:w-14 bg-transparent hover:opacity-100 hover:bg-transparent hover:scale-140 ${
                                   emojis === emoji.id
                                     ? "opacity-100 scale-150"
@@ -284,7 +353,7 @@ const Complaint = () => {
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent className="font-semibold">
-                              {emoji.emotion}
+                              {emoji.id}
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -296,9 +365,17 @@ const Complaint = () => {
                     name="shopNumber"
                     type="number"
                     placeholder="Fair Price Shop Number"
+                    value={feedbackData.shopNumber}
+                    onChange={handleChange}
                   />
 
-                  <Textarea type="text" name="message" placeholder="Message" />
+                  <Textarea
+                    type="text"
+                    name="message"
+                    placeholder="Message"
+                    value={feedbackData.message}
+                    onChange={handleChange}
+                  />
                   <Button type="submit" disabled={isLoading}>
                     {isLoading ? (
                       <>
