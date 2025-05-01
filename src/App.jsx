@@ -17,6 +17,7 @@ import HomePage from "./pages/user/HomePage";
 import {
   AdminRoute,
   AuthenticatedAdmin,
+  AuthenticatedUser,
   ProtectedRoutes,
 } from "./components/ProtectedRoutes";
 import AdminLogin from "./pages/admin/adminLogin";
@@ -52,7 +53,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <AuthenticatedUser>
+            <Login />
+          </AuthenticatedUser>
+        ),
       },
       {
         path: "login/otp-verification",

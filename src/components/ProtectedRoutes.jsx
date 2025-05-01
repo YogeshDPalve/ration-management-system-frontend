@@ -26,6 +26,9 @@ export const AuthenticatedAdmin = ({ children }) => {
   if (isAuthenticated && user?.role === "admin") {
     return <Navigate to={"/admin/dashboard"} />;
   }
+  if (isAuthenticated && user?.role !== "admin") {
+    return <Navigate to={"/login"} />;
+  }
   return children;
 };
 
