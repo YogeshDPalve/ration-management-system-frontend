@@ -11,7 +11,6 @@ import {
 } from "@/features/api/authApi";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -38,8 +37,9 @@ const Login = () => {
         rationId: formData.rationId,
       }).unwrap(); // generate OTP
       toast.success(otpData.message || "OTP sent successfully");
+      const mobileNo = loginData.userInfo.mobileNo;
 
-      navigate("/login/otp-verification");
+      navigate("/login/otp-verification", { state: { mobileNo } });
     } catch (err) {
       toast.error(
         err?.data?.message ||

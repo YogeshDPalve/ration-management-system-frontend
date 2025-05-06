@@ -4,9 +4,16 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center">
       <Link to="/login">
-        <Button variant='outline' className='mt-10'>Go to Login</Button>
+        <Button variant="outline" className="mt-10">
+          Go to Login
+        </Button>
+      </Link>
+      <Link to="/admin/login">
+        <Button variant="outline" className="mt-10">
+          Go to Admin Login
+        </Button>
       </Link>
     </div>
   );

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userLoggedIn, userLoggedOut } from "../authSlice";
+import { userLoggedIn, userLoggedOut, userOtpVerified } from "../authSlice";
 import { BASE_API } from "@/constants/constants";
 
 const USER_API = `${BASE_API}/api/v1/user`;
@@ -27,6 +27,7 @@ export const authApi = createApi({
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
+          console.log("get user data", result.data.userInfo);
           dispatch(userLoggedIn({ user: result.data.userInfo }));
         } catch (error) {
           console.log(error);
@@ -53,6 +54,15 @@ export const authApi = createApi({
         method: "POST",
         body: otp,
       }),
+      async onQueryStarted(args, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          console.log("result from getuser", result);
+          dispatch(userOtpVerified());
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
     resetPassword: builder.mutation({
       query: (passwordData) => ({
@@ -62,14 +72,14 @@ export const authApi = createApi({
       }),
     }),
     getUser: builder.query({
-      query: () => ({
-        url: "/get-user-info",
+      query: (rationId) => ({
+        url: `/get-user-info/${rationId}`,
         method: "GET",
       }),
     }),
     logout: builder.query({
-      query: () => ({
-        url: "/logout",
+      query: (rationId) => ({
+        url: `/logout?rationId=${rationId}`,
         method: "GET",
       }),
       async onQueryStarted(args, { queryFulfilled, dispatch }) {

@@ -40,10 +40,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, NavLink } from "react-router-dom";
 import "../index.css";
 import { useLazyLogoutQuery } from "@/features/api/authApi";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
 const Sidebar = () => {
+  const { rationId } = useSelector((store) => store?.auth?.user);
   // import user logout api
-  const [trigger, { isLoading, error }] = useLazyLogoutQuery();
+  const [trigger, { isLoading, error }] = useLazyLogoutQuery(rationId);
   // logout user function
   const handleLogout = () => {
     try {
