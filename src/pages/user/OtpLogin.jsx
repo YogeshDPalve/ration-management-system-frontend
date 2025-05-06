@@ -20,11 +20,14 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useVerifyOtpMutation } from "@/features/api/authApi";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OtpLogin = () => {
   const navigate = useNavigate();
-  const mobileNo = useSelector((store) => store.auth.user.mobileNo);
+  const location = useLocation();
+
+  // getting mobile no through useLocation hook
+  const mobileNo = location?.state?.mobileNo;
 
   const [value, setValue] = useState("");
 

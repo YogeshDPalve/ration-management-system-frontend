@@ -98,7 +98,7 @@ const Sidebar = () => {
                   />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <h4 className="text-sm">John Doe</h4>
+                <h4 className="text-sm">Admin</h4>
               </div>
             </Button>
           </div>
@@ -273,7 +273,7 @@ const Sidebar = () => {
                     <div className="mb-4">
                       <h2 className="text-xs font-inter text-muted-foreground mb-1">
                         Account
-                      </h2>{" "}
+                      </h2> 
                       <Button
                         variant="outline"
                         className="h-12 p-2 w-full cursor-pointer flex justify-start items-center"
@@ -286,7 +286,7 @@ const Sidebar = () => {
                             />
                             <AvatarFallback>CN</AvatarFallback>
                           </Avatar>
-                          <h4 className="text-sm">John Doe</h4>
+                          <h4 className="text-sm">Admin</h4>
                         </div>
                       </Button>
                     </div>

@@ -61,7 +61,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "login/otp-verification",
-        element: <OtpLogin />,
+        element: (
+          <AuthenticatedUser>
+            <OtpLogin />
+          </AuthenticatedUser>
+        ),
       },
       {
         path: "register",

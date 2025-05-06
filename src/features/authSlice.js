@@ -9,7 +9,12 @@ const authSlice = createSlice({
   reducers: {
     userLoggedIn: (state, action) => {
       state.user = action.payload.user;
+    },
+    userOtpVerified: (state) => {
       state.isAuthenticated = true;
+    },
+    getUserData: (state, action) => {
+      state.user = action.payload.user;
     },
     userLoggedOut: (state) => {
       state.user = null;
@@ -18,5 +23,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+export const { userLoggedIn, getUserData, userLoggedOut, userOtpVerified } =
+  authSlice.actions;
 export default authSlice.reducer;
